@@ -1,8 +1,8 @@
 name = "moonlit-aura"
 main = "index.js"
 compatibility_date = "2024-01-01"
+workers_dev = true
 
-[site]
-bucket = "."
-include = ["*.html", "*.css", "*.js", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.webp", "*.avif", "*.pdf"]
-entry-point = "."
+[[env.production.routes]]
+pattern = "example.com/*"
+zone_name = "example.com"
