@@ -1,0 +1,27 @@
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# PHP files (not needed for static version)
+*.php
+
+# Node modules (if using any build tools)
+node_modules/
+npm-debug.log
+yarn.lock
+
+# OS files
+Thumbs.db
+.env.local
+
+# Temporary files
+*.tmp
+*.log
+
+# Build output
+dist/
+build/
