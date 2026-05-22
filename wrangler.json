@@ -2,7 +2,12 @@
   "name": "moonlitaura",
   "main": "index.js",
   "compatibility_date": "2024-04-01",
-  "assets": {
-    "directory": "."
+  "build": {
+    "upload": {
+      "format": "service-worker"
+    }
+  },
+  "observability": {
+    "enabled": true
   }
 }

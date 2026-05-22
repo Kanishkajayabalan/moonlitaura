@@ -1,13 +1,13 @@
 export default {
-  async fetch(request, env) {
+  async fetch(request) {
     const url = new URL(request.url);
     
-    // If path is root, serve index.html
-    if (url.pathname === '/') {
-      url.pathname = '/index.html';
-    }
-    
-    // Serve static assets
-    return env.ASSETS.fetch(url.toString());
+    // For now, serve a simple response
+    return new Response('Moonlit Aura Website - Static site serving setup', {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html;charset=UTF-8'
+      }
+    });
   }
 };
