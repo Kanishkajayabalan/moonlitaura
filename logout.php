@@ -1,6 +1,13 @@
 <?php
 session_start();
 session_destroy();
-header("Location: login.php");
-exit();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=./login.php">
+</head>
+<body>
+</body>
+</html>
 ?>

@@ -73,13 +73,20 @@ nav a:hover { text-decoration: underline; }
     padding: 20px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-
+    display: flex;
+    flex-direction: column;
 }
 .card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
+}
+
+.card button {
+    flex: 1;
+    margin: 5px !important;
+    min-width: 100px;
 }
 
 .price { font-weight: 700; color: #e91e63; }
@@ -174,8 +181,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Handmade Silver Necklace</h3>
 <div class="rating">★★★★★ (4.8)</div>
 <p>Elegant handcrafted premium necklace.</p>
-<div class="price">1299</div>
+<div class="price">₹1299</div>
 <button onclick="addToCart('Handmade Silver Necklace',1299)">Add to Cart</button>
+<button onclick="buyNow('Handmade Silver Necklace',1299)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -183,8 +191,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Organic Lavender Candle</h3>
 <div class="rating">★★★★☆ (4.6)</div>
 <p>Natural soy wax relaxing candle.</p>
-<div class="price">599</div>
+<div class="price">₹599</div>
 <button onclick="addToCart('Organic Lavender Candle',599)">Add to Cart</button>
+<button onclick="buyNow('Organic Lavender Candle',599)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -192,8 +201,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Crochet Handmade Handbag</h3>
 <div class="rating">★★★★★ (5.0)</div>
 <p>Stylish handmade cotton crochet bag.</p>
-<div class="price">1499</div>
+<div class="price">₹1499</div>
 <button onclick="addToCart('Crochet Handbag',1499)">Add to Cart</button>
+<button onclick="buyNow('Crochet Handbag',1499)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -201,8 +211,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Premium Resin Art Frame</h3>
 <div class="rating">★★★★☆ (4.7)</div>
 <p>Beautiful handcrafted resin wall art.</p>
-<div class="price">2199</div>
+<div class="price">₹2199</div>
 <button onclick="addToCart('Resin Art Frame',2199)">Add to Cart</button>
+<button onclick="buyNow('Resin Art Frame',2199)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -210,8 +221,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Wooden Jewelry Box</h3>
 <div class="rating">★★★★★ (4.9)</div>
 <p>Premium handcrafted storage box.</p>
-<div class="price">1899</div>
+<div class="price">₹1899</div>
 <button onclick="addToCart('Wooden Jewelry Box',1899)">Add to Cart</button>
+<button onclick="buyNow('Wooden Jewelry Box',1899)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -219,8 +231,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Handmade Diary</h3>
 <div class="rating">★★★★☆ (4.5)</div>
 <p>Eco-friendly recycled paper journal.</p>
-<div class="price">799</div>
+<div class="price">₹799</div>
 <button onclick="addToCart('Handmade Diary',799)">Add to Cart</button>
+<button onclick="buyNow('Handmade Diary',799)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -228,8 +241,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Clay Pot Set</h3>
 <div class="rating">★★★★★ (5.0)</div>
 <p>Traditional handcrafted clay pots.</p>
-<div class="price">1299</div>
+<div class="price">₹1299</div>
 <button onclick="addToCart('Clay Pot Set',1299)">Add to Cart</button>
+<button onclick="buyNow('Clay Pot Set',1299)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -237,17 +251,19 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Macrame Wall Hanging</h3>
 <div class="rating">★★★★☆ (4.6)</div>
 <p>Boho-style handmade décor piece.</p>
-<div class="price">1099</div>
+<div class="price">₹1099</div>
 <button onclick="addToCart('Macrame Wall Hanging',1099)">Add to Cart</button>
+<button onclick="buyNow('Macrame Wall Hanging',1099)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
 <img src="soap.jpg" alt="Handmade Soap Pack">
-<h3>Handmade Organic Soap Pack</h3>
+<h3>Handmade Organic Soap</h3>
 <div class="rating">★★★★★ (4.9)</div>
-<p>Organic herbal soap collection.</p>
-<div class="price">499</div>
+<p>Organic herbal soap pack collection.</p>
+<div class="price">₹499</div>
 <button onclick="addToCart('Handmade Soap Pack',499)">Add to Cart</button>
+<button onclick="buyNow('Handmade Soap Pack',499)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 <div class="card">
@@ -255,8 +271,9 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <h3>Customized Name Frame</h3>
 <div class="rating">★★★★★ (5.0)</div>
 <p>Personalized handcrafted gift frame.</p>
-<div class="price">1699</div>
+<div class="price">₹1699</div>
 <button onclick="addToCart('Customized Name Frame',1699)">Add to Cart</button>
+<button onclick="buyNow('Customized Name Frame',1699)" style="background: #ff6b6b; margin-left: 5px;">Buy Now</button>
 </div>
 
 </section>
@@ -309,7 +326,7 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 </div>
 
 <footer>
-© 2026 MOONLIT AURA
+    <p>© 2026 Moonlit Aura | All Rights Reserved</p>
 </footer>
 
 <script>
@@ -382,6 +399,16 @@ alert("Your cart is empty 😢");
 return;
 }
 
+document.getElementById('home').style.display='none';
+document.getElementById('cart').style.display='none';
+document.getElementById('payment').style.display='block';
+}
+
+// buy now - direct checkout
+function buyNow(name, price){
+localStorage.removeItem('cart');
+let cart = [{name, price}];
+localStorage.setItem('cart', JSON.stringify(cart));
 document.getElementById('home').style.display='none';
 document.getElementById('cart').style.display='none';
 document.getElementById('payment').style.display='block';

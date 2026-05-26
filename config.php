@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Database configuration
 $db_host = "localhost";
 $db_user = "root";

@@ -2,6 +2,7 @@
 include 'config.php';
 
 $message = "";
+$show_redirect = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $conn->real_escape_string($_POST['username']);
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($conn->query($insert_user) === TRUE) {
                 $message = "Account created successfully! You can now login.";
-                header("Refresh: 2; url=login.php");
+                $show_redirect = true;
             } else {
                 $message = "Error: " . $conn->error;
             }
@@ -46,6 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php if ($show_redirect): ?>
+        <meta http-equiv="refresh" content="2; url=./login.php">
+    <?php endif; ?>
     <title>Register - Moonlit Aura</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>

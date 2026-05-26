@@ -1,18 +1,16 @@
 <?php
 include 'config.php';
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-
-// Fetch all products
-$products_query = "SELECT * FROM products";
-$products_result = $conn->query($products_query);
+$is_logged_in = isset($_SESSION['user_id']);
 $products = [];
-while ($row = $products_result->fetch_assoc()) {
-    $products[] = $row;
+
+// Fetch all products only if user is logged in
+if ($is_logged_in) {
+    $products_query = "SELECT * FROM products";
+    $products_result = $conn->query($products_query);
+    while ($row = $products_result->fetch_assoc()) {
+        $products[] = $row;
+    }
 }
 ?>
 
@@ -232,12 +230,20 @@ while ($row = $products_result->fetch_assoc()) {
     <nav>
         <a onclick="showPage('home')">Home</a>
         <a onclick="scrollToSection('about')">About</a>
-        <a onclick="scrollToSection('products')">Shop</a>
-        <a onclick="scrollToSection('contact')">Contact</a>
-        <a onclick="showPage('cart')">Cart</a>
-        <a href="logout.php" class="logout-btn">Logout</a>
+        <?php if ($is_logged_in): ?>
+            <a onclick="scrollToSection('products')">Shop</a>
+            <a onclick="scrollToSection('contact')">Contact</a>
+            <a onclick="showPage('cart')">Cart</a>
+            <a href="logout.php" class="logout-btn">Logout</a>
+        <?php else: ?>
+            <a onclick="scrollToSection('contact')">Contact</a>
+            <a href="login.php" class="logout-btn" style="background: #4da3f0;">Login</a>
+            <a href="register.php" class="logout-btn" style="background: #7cb342;">Register</a>
+        <?php endif; ?>
     </nav>
-    <div class="user-info">Welcome, <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>!</div>
+    <?php if ($is_logged_in): ?>
+        <div class="user-info">Welcome, <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>!</div>
+    <?php endif; ?>
 </header>
 
 <!-- HOME -->
@@ -255,16 +261,24 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 </section>
 
 <section class="products" id="products">
-<?php foreach ($products as $product): ?>
-    <div class="card">
-        <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-        <div class="rating">★★★★★ (<?php echo number_format($product['rating'], 1); ?>)</div>
-        <p><?php echo htmlspecialchars($product['description']); ?></p>
-        <div class="price">₹<?php echo number_format($product['price'], 2); ?></div>
-        <button onclick="addToCart(<?php echo $product['id']; ?>, '<?php echo htmlspecialchars($product['name']); ?>', <?php echo $product['price']; ?>)">Add to Cart</button>
+<?php if ($is_logged_in): ?>
+    <?php foreach ($products as $product): ?>
+        <div class="card">
+            <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+            <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+            <div class="rating">★★★★★ (<?php echo number_format($product['rating'], 1); ?>)</div>
+            <p><?php echo htmlspecialchars($product['description']); ?></p>
+            <div class="price">₹<?php echo number_format($product['price'], 2); ?></div>
+            <button onclick="addToCart(<?php echo $product['id']; ?>, '<?php echo htmlspecialchars($product['name']); ?>', <?php echo $product['price']; ?>)">Add to Cart</button>
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 15px;">
+        <h2>Please Login to View Products</h2>
+        <p>Sign in to browse our handmade collection and start shopping!</p>
+        <a href="login.php" style="background: #4da3f0; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; display: inline-block; margin-top: 15px;">Login Here</a>
     </div>
-<?php endforeach; ?>
+<?php endif; ?>
 </section>
 
 <section class="contact" id="contact">
@@ -318,6 +332,13 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <script>
     // page switch
     function showPage(page) {
+        <?php if (!$is_logged_in): ?>
+            if (page === 'cart') {
+                alert('Please login to access the cart!');
+                return;
+            }
+        <?php endif; ?>
+        
         document.getElementById('home').style.display = (page === 'home') ? 'block' : 'none';
         document.getElementById('cart').style.display = (page === 'cart') ? 'block' : 'none';
         document.getElementById('payment').style.display = 'none';
@@ -334,6 +355,12 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 
     // add to cart
     function addToCart(id, name, price) {
+        <?php if (!$is_logged_in): ?>
+            alert('Please login to add items to cart!');
+            window.location.href = 'login.php';
+            return;
+        <?php endif; ?>
+        
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         cart.push({ id, name, price });
         localStorage.setItem('cart', JSON.stringify(cart));
