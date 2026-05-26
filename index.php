@@ -1,259 +1,182 @@
-<?php
-include 'config.php';
-
-$is_logged_in = isset($_SESSION['user_id']);
-$products = [];
-
-// Fetch all products only if user is logged in
-if ($is_logged_in) {
-    $products_query = "SELECT * FROM products";
-    $products_result = $conn->query($products_query);
-    while ($row = $products_result->fetch_assoc()) {
-        $products[] = $row;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moonlit Aura - Handmade Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moonlit Aura - Handmade Store</title>
 
-    <style>
-        /* ===== BODY ===== */
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fecfef, #a1f0ed, #ffd6a5);
-            background-attachment: fixed;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-        h1, h2, h3 { font-weight: 700; }
-        p, li { font-weight: 500; }
+<style>
+/* ===== BODY ===== */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg,#ff9a9e,#fecfef,#a1f0ed,#ffd6a5);
+    background-attachment: fixed;
+}
 
-        body::before, body::after {
-            content: "";
-            position: fixed;
-            width: 350px;
-            height: 350px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            z-index: 0;
-        }
-        body::before { top: -120px; left: -120px; }
-        body::after { bottom: -120px; right: -120px; }
+h1, h2, h3 { font-weight: 700; }
+p, li { font-weight: 500; }
 
-        /* ===== HEADER ===== */
-        header {
-            text-align: center;
-            padding: 25px;
-            color: rgb(12, 12, 12);
-            position: relative;
-            z-index: 1;
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        header h1 { font-size: 42px; margin: 0; }
+body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    z-index: 0;
+}
+body::before { top: -120px; left: -120px; }
+body::after { bottom: -120px; right: -120px; }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-        }
+/* ===== HEADER ===== */
+header {
+    text-align: center;
+    padding: 25px;
+    color: rgb(12, 12, 12);
+    position: relative;
+    z-index: 1;
+}
+header h1 { font-size: 42px; }
 
-        nav a {
-            text-decoration: none;
-            color: rgb(10, 10, 10);
-            font-weight: 600;
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
+nav a {
+    text-decoration: none;
+    color: rgb(10, 10, 10);
+    margin: 0 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+nav a:hover { text-decoration: underline; }
 
-        nav a:hover { 
-            background: #6a11cb;
-            color: white;
-        }
+/* ===== SECTIONS ===== */
+.about, .quotes, .contact, .cart-container {
+    text-align: center;   
+    background: white;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
 
-        .logout-btn {
-            background: #f44336;
-            color: white !important;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-        }
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px;
+}
 
-        .logout-btn:hover {
-            background: #da190b;
-        }
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.card img {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
-        .user-info {
-            color: #333;
-            font-size: 14px;
-            margin-top: 10px;
-        }
+.card h3,
+.card .rating,
+.card p,
+.card .price {
+    grid-column: 1 / -1;
+}
 
-        /* ===== SECTIONS ===== */
-        .about, .quotes, .contact, .cart-container {
-            text-align: center;   
-            background: white;
-            margin: 40px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
+.card button {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+}
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 40px;
-            position: relative;
-            z-index: 1;
-        }
+.price { font-weight: 700; color: #e91e63; }
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s;
-        }
+button {
+    background: #6a11cb;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+}
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+.cart-page { display:none; }
 
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
+.cart-item {
+    display: grid;
+    grid-template-columns: 1fr 120px 100px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
 
-        .rating {
-            color: #ff9a00;
-            font-weight: 600;
-            margin: 10px 0;
-        }
+/* product name */
+.cart-item span:first-child {
+    text-align: left;
+}
 
-        .price { 
-            font-weight: 700; 
-            color: #e91e63; 
-            font-size: 20px;
-            margin: 10px 0;
-        }
+/* price */
+.cart-item span:nth-child(2) {
+    text-align: right;
+    font-weight: 600;
+}
 
-        button {
-            background: #6a11cb;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
+/* remove button */
+.cart-item button {
+    justify-self: end;
+}
 
-        button:hover {
-            background: #5009a8;
-        }
+.cart-total {
+    font-weight:700;
+    text-align:right;
+    margin-top:10px;
+}
 
-        .cart-page { display: none; }
+#payment label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 1px 0;   /* reduce vertical gap */
+}
 
-        .cart-item {
-            display: grid;
-            grid-template-columns: 1fr 120px 100px;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
-        }
+#payment input[type="radio"] {
+    margin: 0;
+}
 
-        .cart-item span:first-child {
-            text-align: left;
-        }
-
-        .cart-item span:nth-child(2) {
-            text-align: right;
-            font-weight: 600;
-        }
-
-        .cart-item button {
-            justify-self: end;
-        }
-
-        .cart-total {
-            font-weight: 700;
-            text-align: right;
-            margin-top: 10px;
-            font-size: 18px;
-            color: #333;
-        }
-
-        #payment label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;   
-            cursor: pointer;
-        }
-
-        #payment input[type="radio"] {
-            margin: 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            margin-top: 40px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .home { display: block; }
-
-    </style>
+</style>
 </head>
 
 <body>
 
 <header>
-    <h1>MOONLIT AURA🌙</h1>
-    <nav>
-        <a onclick="showPage('home')">Home</a>
-        <a onclick="scrollToSection('about')">About</a>
-        <?php if ($is_logged_in): ?>
-            <a onclick="scrollToSection('products')">Shop</a>
-            <a onclick="scrollToSection('contact')">Contact</a>
-            <a onclick="showPage('cart')">Cart</a>
-            <a href="logout.php" class="logout-btn">Logout</a>
-        <?php else: ?>
-            <a onclick="scrollToSection('contact')">Contact</a>
-            <a href="login.php" class="logout-btn" style="background: #4da3f0;">Login</a>
-            <a href="register.php" class="logout-btn" style="background: #7cb342;">Register</a>
-        <?php endif; ?>
-    </nav>
-    <?php if ($is_logged_in): ?>
-        <div class="user-info">Welcome, <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>!</div>
-    <?php endif; ?>
+<h1>MOONLIT AURA🌙</h1>
+<nav>
+<a onclick="showPage('home')">Home</a>
+<a onclick="scrollToSection('about')">About</a>
+<a onclick="scrollToSection('products')">Shop</a>
+<a onclick="scrollToSection('contact')">Contact</a>
+<a onclick="showPage('cart')">Cart</a>
+</nav>
 </header>
 
 <!-- HOME -->
-<div id="home" class="home">
+<div id="home">
 
 <section class="about" id="about">
 <h2>About Our Store</h2>
-<p>Welcome to our handmade world! ✨
-At moonlit Aura, we create and curate beautiful handcrafted items made with love and care. From elegant jewelry to cozy home décor, each piece is designed to bring joy and uniqueness into your life. We proudly support local artisans and small creators who put their heart into every product. Our goal is to offer high-quality handmade items that are special, sustainable, and affordable. Thank you for supporting handmade and choosing something truly one-of-a-kind.</p>
+<p> Welcome to our handmade world! ✨
+At moonlit Aura, we create and curate beautiful handcrafted items made with love and care. From elegant jewelry to cozy home décor, each piece is designed to bring joy and uniqueness into your life.We proudly support local artisans and small creators who put their heart into every product. Our goal is to offer high-quality handmade items that are special, sustainable, and affordable.Thank you for supporting handmade and choosing something truly one-of-a-kind.</p>
 </section>
+
 
 <section class="quotes" id="quotes">
 <h2>Where creativity🎀meets the glow of the moon🌙</h2>
@@ -261,24 +184,107 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 </section>
 
 <section class="products" id="products">
-<?php if ($is_logged_in): ?>
-    <?php foreach ($products as $product): ?>
-        <div class="card">
-            <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-            <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-            <div class="rating">★★★★★ (<?php echo number_format($product['rating'], 1); ?>)</div>
-            <p><?php echo htmlspecialchars($product['description']); ?></p>
-            <div class="price">₹<?php echo number_format($product['price'], 2); ?></div>
-            <button onclick="addToCart(<?php echo $product['id']; ?>, '<?php echo htmlspecialchars($product['name']); ?>', <?php echo $product['price']; ?>)">Add to Cart</button>
-        </div>
-    <?php endforeach; ?>
-<?php else: ?>
-    <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: white; border-radius: 15px;">
-        <h2>Please Login to View Products</h2>
-        <p>Sign in to browse our handmade collection and start shopping!</p>
-        <a href="login.php" style="background: #4da3f0; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; display: inline-block; margin-top: 15px;">Login Here</a>
-    </div>
-<?php endif; ?>
+
+<div class="card">
+<img src="handmade silver necklace.webp" alt="Handmade Silver Necklace">
+<h3>Handmade Silver Necklace</h3>
+<div class="rating">★★★★★ (4.8)</div>
+<p>Elegant handcrafted premium necklace.</p>
+<div class="price">₹1299</div>
+<button onclick="addToCart('Handmade Silver Necklace',1299)">Add to Cart</button>
+<button onclick="buyNow('Handmade Silver Necklace',1299)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="lavender candle.jpg" alt="Organic Lavender Candle">
+<h3>Organic Lavender Candle</h3>
+<div class="rating">★★★★☆ (4.6)</div>
+<p>Natural soy wax relaxing candle.</p>
+<div class="price">₹599</div>
+<button onclick="addToCart('Organic Lavender Candle',599)">Add to Cart</button>
+<button onclick="buyNow('Organic Lavender Candle',599)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="crochet handbag.jpg" alt="Crochet Handbag">
+<h3>Crochet Handmade Handbag</h3>
+<div class="rating">★★★★★ (5.0)</div>
+<p>Stylish handmade cotton crochet bag.</p>
+<div class="price">₹1499</div>
+<button onclick="addToCart('Crochet Handbag',1499)">Add to Cart</button>
+<button onclick="buyNow('Crochet Handbag',1499)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="resin art frame.webp" alt="Resin Art Frame">
+<h3>Premium Resin Art Frame</h3>
+<div class="rating">★★★★☆ (4.7)</div>
+<p>Beautiful handcrafted resin wall art.</p>
+<div class="price">₹2199</div>
+<button onclick="addToCart('Resin Art Frame',2199)">Add to Cart</button>
+<button onclick="buyNow('Resin Art Frame',2199)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="wood box.webp" alt="Wooden Jewelry Box">
+<h3>Wooden Jewelry Box</h3>
+<div class="rating">★★★★★ (4.9)</div>
+<p>Premium handcrafted storage box.</p>
+<div class="price">₹1899</div>
+<button onclick="addToCart('Wooden Jewelry Box',1899)">Add to Cart</button>
+<button onclick="buyNow('Wooden Jewelry Box',1899)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="handmade diary.webp" alt="Handmade Diary">
+<h3>Handmade Diary</h3>
+<div class="rating">★★★★☆ (4.5)</div>
+<p>Eco-friendly recycled paper journal.</p>
+<div class="price">₹799</div>
+<button onclick="addToCart('Handmade Diary',799)">Add to Cart</button>
+<button onclick="buyNow('Handmade Diary',799)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="clay pot.jpg" alt="Clay Pot Set">
+<h3>Clay Pot Set</h3>
+<div class="rating">★★★★★ (5.0)</div>
+<p>Traditional handcrafted clay pots.</p>
+<div class="price">₹1299</div>
+<button onclick="addToCart('Clay Pot Set',1299)">Add to Cart</button>
+<button onclick="buyNow('Clay Pot Set',1299)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="wall hanging.jpeg" alt="Macrame Wall Hanging">
+<h3>Macrame Wall Hanging</h3>
+<div class="rating">★★★★☆ (4.6)</div>
+<p>Boho-style handmade décor piece.</p>
+<div class="price">₹1099</div>
+<button onclick="addToCart('Macrame Wall Hanging',1099)">Add to Cart</button>
+<button onclick="buyNow('Macrame Wall Hanging',1099)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="soap.jpg" alt="Handmade Soap Pack">
+<h3>Handmade Organic Soap</h3>
+<div class="rating">★★★★★ (4.9)</div>
+<p>Organic herbal soap pack collection.</p>
+<div class="price">₹499</div>
+<button onclick="addToCart('Handmade Soap Pack',499)">Add to Cart</button>
+<button onclick="buyNow('Handmade Soap Pack',499)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
+<div class="card">
+<img src="customized frame.avif" alt="Customized Name Frame">
+<h3>Customized Name Frame</h3>
+<div class="rating">★★★★★ (5.0)</div>
+<p>Personalized handcrafted gift frame.</p>
+<div class="price">₹1699</div>
+<button onclick="addToCart('Customized Name Frame',1699)">Add to Cart</button>
+<button onclick="buyNow('Customized Name Frame',1699)" style="background: #ff6b6b;">Buy Now</button>
+</div>
+
 </section>
 
 <section class="contact" id="contact">
@@ -292,6 +298,7 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 </div>
 </section>
 
+
 </div>
 
 <!-- CART -->
@@ -300,9 +307,11 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 
 <section class="cart-container">
 <div id="cart-items"></div>
+
 <br>
+
 <button onclick="goToPayment()">Proceed to Payment</button>
-<button onclick="showPage('home')" style="background: #999; margin-left: 10px;">Continue Shopping</button>
+
 </section>
 </div>
 
@@ -311,142 +320,124 @@ At moonlit Aura, we create and curate beautiful handcrafted items made with love
 <header><h1>Payment 💳</h1></header>
 
 <section class="cart-container">
+
 <h2>Select Payment Method</h2>
 
-<label><input type="radio" name="pay" value="UPI"> UPI</label>
-<label><input type="radio" name="pay" value="Card"> Card</label>
+<label><input type="radio" name="pay" value="UPI"> UPI</label><br><br>
+<label><input type="radio" name="pay" value="Card"> Card</label><br><br>
 <label><input type="radio" name="pay" value="COD"> Cash on Delivery</label>
 
 <br><br>
 
 <button onclick="placeOrder()">Place Order</button>
-<button onclick="showPage('cart')" style="background: #999; margin-left: 10px;">Back to Cart</button>
 
 </section>
 </div>
 
 <footer>
-© 2026 MOONLIT AURA
+    <p>© 2026 Moonlit Aura | All Rights Reserved</p>
 </footer>
 
 <script>
-    // page switch
-    function showPage(page) {
-        <?php if (!$is_logged_in): ?>
-            if (page === 'cart') {
-                alert('Please login to access the cart!');
-                return;
-            }
-        <?php endif; ?>
-        
-        document.getElementById('home').style.display = (page === 'home') ? 'block' : 'none';
-        document.getElementById('cart').style.display = (page === 'cart') ? 'block' : 'none';
-        document.getElementById('payment').style.display = 'none';
 
-        if (page === 'cart') loadCart();
-        if (page === 'home') window.scrollTo(0, 0);
-    }
+// page switch
+function showPage(page){
+document.getElementById('home').style.display = (page==='home')?'block':'none';
+document.getElementById('cart').style.display = (page==='cart')?'block':'none';
+document.getElementById('payment').style.display = 'none';
 
-    // scroll
-    function scrollToSection(id) {
-        showPage('home');
-        setTimeout(() => { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }, 50);
-    }
+if(page==='cart') loadCart();
+}
 
-    // add to cart
-    function addToCart(id, name, price) {
-        <?php if (!$is_logged_in): ?>
-            alert('Please login to add items to cart!');
-            window.location.href = 'login.php';
-            return;
-        <?php endif; ?>
-        
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.push({ id, name, price });
-        localStorage.setItem('cart', JSON.stringify(cart));
-        alert(name + ' added to cart!');
-    }
+// scroll
+function scrollToSection(id){
+showPage('home');
+setTimeout(()=>{document.getElementById(id).scrollIntoView({behavior:'smooth'});},50);
+}
 
-    // load cart
-    function loadCart() {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let container = document.getElementById('cart-items');
-        container.innerHTML = "";
+// add cart
+function addToCart(name,price){
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+cart.push({name,price});
+localStorage.setItem('cart',JSON.stringify(cart));
+}
 
-        if (cart.length === 0) {
-            container.innerHTML = "<p>Your cart is empty 😢</p>";
-            return;
-        }
+// load cart
+function loadCart(){
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let container = document.getElementById('cart-items');
+container.innerHTML="";
 
-        let total = 0;
+if(cart.length===0){
+container.innerHTML="<p>Your cart is empty 😢</p>";
+return;
+}
 
-        cart.forEach((item, index) => {
-            total += item.price;
+let total=0;
 
-            let div = document.createElement('div');
-            div.className = "cart-item";
-            div.innerHTML = `
-            <span>${item.name}</span>
-            <span>₹${item.price.toFixed(2)}</span>
-            <button onclick="removeItem(${index})">Remove</button>
-            `;
-            container.appendChild(div);
-        });
+cart.forEach((item,index)=>{
+total+=item.price;
 
-        container.innerHTML += `<div class="cart-total">Total: ₹${total.toFixed(2)}</div>`;
-    }
+let div=document.createElement('div');
+div.className="cart-item";
+div.innerHTML=`
+<span>${item.name}</span>
+<span>₹${item.price}</span>
+<button onclick="removeItem(${index})">Remove</button>
+`;
+container.appendChild(div);
+});
 
-    // remove item
-    function removeItem(index) {
-        let cart = JSON.parse(localStorage.getItem('cart'));
-        cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        loadCart();
-    }
+container.innerHTML += `<div class="cart-total">Total: ₹${total}</div>`;
+}
 
-    // go to payment
-    function goToPayment() {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+// remove
+function removeItem(index){
+let cart = JSON.parse(localStorage.getItem('cart'));
+cart.splice(index,1);
+localStorage.setItem('cart',JSON.stringify(cart));
+loadCart();
+}
 
-        if (cart.length === 0) {
-            alert("Your cart is empty 😢");
-            return;
-        }
+// go payment
+function goToPayment(){
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-        document.getElementById('home').style.display = 'none';
-        document.getElementById('cart').style.display = 'none';
-        document.getElementById('payment').style.display = 'block';
-    }
+if(cart.length===0){
+alert("Your cart is empty 😢");
+return;
+}
 
-    // place order
-    function placeOrder() {
-        let method = document.querySelector('input[name="pay"]:checked');
+document.getElementById('home').style.display='none';
+document.getElementById('cart').style.display='none';
+document.getElementById('payment').style.display='block';
+}
 
-        if (!method) {
-            alert("Select payment method!");
-            return;
-        }
+// buy now - direct checkout
+function buyNow(name, price){
+localStorage.removeItem('cart');
+let cart = [{name, price}];
+localStorage.setItem('cart', JSON.stringify(cart));
+document.getElementById('home').style.display='none';
+document.getElementById('cart').style.display='none';
+document.getElementById('payment').style.display='block';
+}
 
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        
-        // Send order to server
-        $.ajax({
-            type: 'POST',
-            url: 'save_order.php',
-            data: {
-                items: JSON.stringify(cart),
-                payment_method: method.value
-            },
-            success: function(response) {
-                alert("🎉 Order Placed Successfully..!!! \n Thank you for shopping with Moonlit Aura💗");
-                localStorage.removeItem('cart');
-                showPage('home');
-            },
-            error: function() {
-                alert("Error placing order. Please try again.");
-            }
-        });
-    }
+// place order
+function placeOrder(){
+let method = document.querySelector('input[name="pay"]:checked');
+
+if(!method){
+alert("Select payment method!");
+return;
+}
+
+alert("🎉 Order Placed Successfully..!!! \n Thank you for shopping with Moonlit Aura💗");
+
+localStorage.removeItem('cart');
+
+showPage('home');
+}
 </script>
 
 </body>
