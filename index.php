@@ -51,13 +51,31 @@ nav a {
 nav a:hover { text-decoration: underline; }
 
 /* ===== SECTIONS ===== */
-.about, .quotes, .contact, .cart-container {
+.about, .quotes, .cart-container {
     text-align: center;   
     background: white;
     margin: 40px;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.contact {
+    background: white;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.contact h2 {
+    text-align: center;
+}
+
+.contact > div {
+    text-align: left;
+    display: inline-block;
+    min-width: 350px;
 }
 
 .products {
@@ -98,6 +116,21 @@ nav a:hover { text-decoration: underline; }
     font-weight: 600;
 }
 
+.card-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.buy-now-btn {
+    background: #ff6b6b !important;
+}
+
+.buy-now-btn:hover {
+    background: #ff4545 !important;
+}
+
 .price { font-weight: 700; color: #e91e63; }
 
 button {
@@ -113,10 +146,11 @@ button {
 
 .cart-item {
     display: grid;
-    grid-template-columns: 1fr 120px 100px;
+    grid-template-columns: 2fr 1fr 80px 80px;
     align-items: center;
-    padding: 10px 0;
+    padding: 15px 0;
     border-bottom: 1px solid #ddd;
+    gap: 15px;
 }
 
 /* product name */
@@ -126,13 +160,67 @@ button {
 
 /* price */
 .cart-item span:nth-child(2) {
-    text-align: right;
+    text-align: center;
     font-weight: 600;
 }
 
-/* remove button */
-.cart-item button {
-    justify-self: end;
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.quantity-control button {
+    padding: 8px 12px;
+    font-size: 16px;
+    background: #6a11cb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 40px;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-control button:hover {
+    background: #4a0b8b;
+    transform: scale(1.05);
+}
+
+.quantity-control button:active {
+    background: #2a0a5b;
+}
+
+.quantity-number {
+    font-weight: 600;
+    min-width: 30px;
+    text-align: center;
+}
+
+.cart-item button.remove-btn {
+    padding: 8px 15px;
+    justify-self: center;
+    background: #ff6b6b;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.cart-item button.remove-btn:hover {
+    background: #ff4545;
+    transform: scale(1.05);
+}
+
+.cart-item button.remove-btn:active {
+    background: #e63535;
 }
 
 .cart-total {
@@ -358,8 +446,23 @@ setTimeout(()=>{document.getElementById(id).scrollIntoView({behavior:'smooth'});
 // add cart
 function addToCart(name,price){
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-cart.push({name,price});
+let existing = cart.find(item => item.name === name);
+if(existing){
+    existing.quantity += 1;
+} else {
+    cart.push({name, price, quantity: 1});
+}
 localStorage.setItem('cart',JSON.stringify(cart));
+}
+
+// buy now - direct checkout
+function buyNow(name, price){
+localStorage.removeItem('cart');
+let cart = [{name, price, quantity: 1}];
+localStorage.setItem('cart', JSON.stringify(cart));
+document.getElementById('home').style.display='none';
+document.getElementById('cart').style.display='none';
+document.getElementById('payment').style.display='block';
 }
 
 // load cart
@@ -376,14 +479,20 @@ return;
 let total=0;
 
 cart.forEach((item,index)=>{
-total+=item.price;
+let itemTotal = item.price * item.quantity;
+total+=itemTotal;
 
 let div=document.createElement('div');
 div.className="cart-item";
 div.innerHTML=`
 <span>${item.name}</span>
-<span>₹${item.price}</span>
-<button onclick="removeItem(${index})">Remove</button>
+<span>₹${itemTotal}</span>
+<div class="quantity-control">
+    <button type="button" onclick="decreaseQty(${index})" style="cursor: pointer;">−</button>
+    <span class="quantity-number">${item.quantity}</span>
+    <button type="button" onclick="increaseQty(${index})" style="cursor: pointer;">+</button>
+</div>
+<button type="button" class="remove-btn" onclick="removeItem(${index})" style="cursor: pointer;">Remove</button>
 `;
 container.appendChild(div);
 });
@@ -393,10 +502,36 @@ container.innerHTML += `<div class="cart-total">Total: ₹${total}</div>`;
 
 // remove
 function removeItem(index){
-let cart = JSON.parse(localStorage.getItem('cart'));
-cart.splice(index,1);
-localStorage.setItem('cart',JSON.stringify(cart));
-loadCart();
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+if(cart[index]){
+    cart.splice(index,1);
+    localStorage.setItem('cart',JSON.stringify(cart));
+    loadCart();
+}
+}
+
+// increase quantity
+function increaseQty(index){
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+if(cart[index]){
+    cart[index].quantity = (cart[index].quantity || 1) + 1;
+    localStorage.setItem('cart',JSON.stringify(cart));
+    loadCart();
+}
+}
+
+// decrease quantity
+function decreaseQty(index){
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+if(cart[index]){
+    if(cart[index].quantity > 1){
+        cart[index].quantity -= 1;
+    } else {
+        cart.splice(index,1);
+    }
+    localStorage.setItem('cart',JSON.stringify(cart));
+    loadCart();
+}
 }
 
 // go payment
