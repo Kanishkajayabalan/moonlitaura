@@ -85,9 +85,7 @@ header h1 {
 }
 
 .checkout-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    display: block;
     margin-bottom: 40px;
 }
 
@@ -517,52 +515,9 @@ header h1 {
             </label>
         </div>
 
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 25px;">Place Order 🛍️</button>
+
     </form>
-</div>
-
-<!-- Order Summary -->
-<div class="order-summary">
-    <h2>Order Summary</h2>
-    <div id="summaryItems"></div>
-    <div class="price-breakdown">
-        <div class="price-row">
-            <span>Subtotal:</span>
-            <span id="subtotal">₹0</span>
-        </div>
-        <div class="price-row">
-            <span>Shipping:</span>
-            <span id="shipping">₹50</span>
-        </div>
-        <div class="price-row">
-            <span>Tax (5%):</span>
-            <span id="tax">₹0</span>
-        </div>
-        <div class="price-row total">
-            <span>TOTAL:</span>
-            <span id="totalPrice">₹0</span>
-        </div>
-    </div>
-
-    <div class="payment-options">
-        <h3>💳 Payment Method</h3>
-        <div class="payment-option">
-            <input type="radio" id="upi" name="payment" value="UPI" required>
-            <label for="upi">UPI (Recommended)</label>
-        </div>
-        <div class="payment-option">
-            <input type="radio" id="card" name="payment" value="Card">
-            <label for="card">Credit/Debit Card</label>
-        </div>
-        <div class="payment-option">
-            <input type="radio" id="cod" name="payment" value="COD">
-            <label for="cod">Cash on Delivery</label>
-        </div>
-    </div>
-
-    <div class="button-group">
-        <button type="button" class="btn btn-secondary" onclick="goBack()">← Back to Cart</button>
-        <button type="button" class="btn btn-primary" onclick="placeOrder()" form="addressForm">Place Order 🛍️</button>
-    </div>
 </div>
 
 </div>
