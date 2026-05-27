@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg,#ff9a9e,#fecfef,#a1f0ed,#ffd6a5), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="moonPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse"><circle cx="100" cy="100" r="15" fill="white" opacity="0.08"/><circle cx="50" cy="50" r="8" fill="white" opacity="0.05"/><circle cx="150" cy="150" r="6" fill="white" opacity="0.04"/></pattern></defs><rect width="1200" height="800" fill="url(%23moonPattern)"/></svg>'); background-attachment: fixed; background-size: auto, auto; }
+body { font-family: 'Poppins', sans-serif; background: url('customized frame.avif') center/cover no-repeat fixed; background-color: #f5f5f5; }
 h1, h2, h3 { font-weight: 700; }
 p, li { font-weight: 500; }
 body::before, body::after { content: ""; position: fixed; width: 350px; height: 350px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; z-index: 0; }
@@ -102,7 +102,7 @@ button:active { transform: translateY(-1px); }
 @keyframes confetti-left { to { transform: translateX(-100vw) translateY(100vh) rotate(360deg); opacity: 0; } }
 @keyframes confetti-right { to { transform: translateX(100vw) translateY(100vh) rotate(360deg); opacity: 0; } }
 
-footer { background: transparent; color: white; text-align: center; padding: 30px; margin-top: 50px; position: relative; z-index: 1; font-weight: 500; }
+footer { background: transparent; color: black; text-align: center; padding: 30px; margin-top: 50px; position: relative; z-index: 1; font-weight: 500; }
 
 @media (max-width: 768px) {
     .products { grid-template-columns: 1fr; padding: 20px; }
