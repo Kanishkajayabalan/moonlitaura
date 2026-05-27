@@ -64,7 +64,7 @@ header p { color: #666; font-size: 16px; }
   color: white;
 }
 
-.content-wrapper { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+.content-wrapper { display: block; }
 
 .payment-methods {
   background: white;
@@ -72,6 +72,8 @@ header p { color: #666; font-size: 16px; }
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   animation: fadeInUp 0.6s ease;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 @keyframes fadeInUp { 
@@ -152,14 +154,7 @@ header p { color: #666; font-size: 16px; }
 .form-row { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; }
 
 .order-summary {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  animation: fadeInUp 0.6s ease 0.2s both;
-  height: fit-content;
-  position: sticky;
-  top: 20px;
+  display: none;
 }
 
 .order-summary h3 { color: #f5576c; font-size: 20px; margin-bottom: 20px; }
@@ -229,9 +224,7 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .content-wrapper { grid-template-columns: 1fr; }
-  .order-summary { position: relative; top: 0; }
-  .payment-methods, .order-summary { padding: 20px; }
+  .payment-methods { padding: 20px; }
   header h1 { font-size: 28px; }
 }
 </style>
@@ -243,7 +236,8 @@ footer {
 
   <header>
     <h1>🌙 MOONLIT AURA</h1>
-    <p>Secure Payment Gateway</p>
+    <p>Complete Your Purchase</p>
+    <div class="breadcrumb">Cart → Address → <span class="active">Payment</span></div>
   </header>
 
   <div class="content-wrapper">
@@ -251,7 +245,7 @@ footer {
       <h2>💳 Choose Payment Method</h2>
       
       <label class="payment-option">
-        <input type="radio" name="payment" value="card" onchange="showCardForm()" checked>
+        <input type="radio" name="payment" value="card" checked>
         <div class="icon">💳</div>
         <div class="info">
           <div class="title">Debit / Credit Card</div>
@@ -260,7 +254,7 @@ footer {
       </label>
 
       <label class="payment-option">
-        <input type="radio" name="payment" value="upi" onchange="hideCardForm()">
+        <input type="radio" name="payment" value="upi">
         <div class="icon">📱</div>
         <div class="info">
           <div class="title">UPI Payment</div>
@@ -269,7 +263,7 @@ footer {
       </label>
 
       <label class="payment-option">
-        <input type="radio" name="payment" value="netbanking" onchange="hideCardForm()">
+        <input type="radio" name="payment" value="netbanking">
         <div class="icon">🏦</div>
         <div class="info">
           <div class="title">Net Banking</div>
@@ -278,7 +272,7 @@ footer {
       </label>
 
       <label class="payment-option">
-        <input type="radio" name="payment" value="wallet" onchange="hideCardForm()">
+        <input type="radio" name="payment" value="wallet">
         <div class="icon">💰</div>
         <div class="info">
           <div class="title">Digital Wallets</div>
@@ -287,7 +281,7 @@ footer {
       </label>
 
       <label class="payment-option">
-        <input type="radio" name="payment" value="cod" onchange="hideCardForm()">
+        <input type="radio" name="payment" value="cod">
         <div class="icon">📦</div>
         <div class="info">
           <div class="title">Cash on Delivery</div>
@@ -367,14 +361,6 @@ footer {
 </footer>
 
 <script>
-function showCardForm() {
-  document.getElementById('cardForm').classList.add('show');
-}
-
-function hideCardForm() {
-  document.getElementById('cardForm').classList.remove('show');
-}
-
 function processPayment() {
   const method = document.querySelector('input[name="payment"]:checked').value;
   alert('✅ Payment processing via ' + method + '...\n\nOrder placed successfully! 🎉');
