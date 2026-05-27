@@ -16,7 +16,8 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg,#ff9a9e,#fecfef,#a1f0ed,#ffd6a5);
+    background-attachment: fixed;
     min-height: 100vh;
     padding: 20px;
 }
@@ -39,6 +40,18 @@ body::after { bottom: -120px; right: -120px; }
     position: relative;
     z-index: 1;
 }
+
+body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    z-index: 0;
+}
+body::before { top: -120px; left: -120px; }
+body::after { bottom: -120px; right: -120px; }
 
 header {
     text-align: center;
@@ -95,7 +108,7 @@ header h1 {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
-    border-bottom: 3px solid #667eea;
+    border-bottom: 3px solid #6a11cb;
     padding-bottom: 10px;
 }
 
@@ -127,8 +140,8 @@ header h1 {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #6a11cb;
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
 }
 
 .form-group textarea {
@@ -161,7 +174,7 @@ header h1 {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
-    border-bottom: 3px solid #667eea;
+    border-bottom: 3px solid #6a11cb;
     padding-bottom: 10px;
 }
 
@@ -216,7 +229,7 @@ header h1 {
 }
 
 .price-row.total span:last-child {
-    color: #667eea;
+    color: #6a11cb;
     font-size: 22px;
 }
 
@@ -245,7 +258,7 @@ header h1 {
 }
 
 .payment-option:hover {
-    border-color: #667eea;
+    border-color: #6a11cb;
     background: #f5f0ff;
 }
 
@@ -284,7 +297,7 @@ header h1 {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #6a11cb, #8e44ad);
     color: white;
     grid-column: 1 / -1;
 }

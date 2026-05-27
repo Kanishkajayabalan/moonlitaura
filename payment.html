@@ -9,12 +9,27 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { 
   font-family: 'Poppins', sans-serif; 
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg,#ff9a9e,#fecfef,#a1f0ed,#ffd6a5);
+  background-attachment: fixed;
   min-height: 100vh;
   padding: 20px;
 }
 
-.container { max-width: 900px; margin: 0 auto; }
+.container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+
+body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 350px;);
+  border-radius: 15px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 1
+    z-index: 0;
+}
+body::before { top: -120px; left: -120px; }
+body::after { bottom: -120px; right: -120px; }
 
 header { 
   text-align: center; 
@@ -25,14 +40,14 @@ header {
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-header h1 { color: #f5576c; font-size: 36px; margin-bottom: 10px; }
+header h1 { color: #6a11cb; font-size: 36px; margin-bottom: 10px; }
 header p { color: #666; font-size: 16px; }
 
 .back-btn {
-  background: rgba(255,255,255,0.95);
-  color: #f5576c;
+  background: rgba(255,255,255,0.9);
+  color: #6a11cb;
   padding: 12px 30px;
-  border: 2px solid #f5576c;
+  border: 2px solid #6a11cb;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -40,10 +55,12 @@ header p { color: #666; font-size: 16px; }
   display: inline-block;
   margin-bottom: 30px;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .back-btn:hover {
-  background: #f5576c;
+  background: #6a11cb;
   color: white;
 }
 
@@ -60,7 +77,7 @@ header p { color: #666; font-size: 16px; }
 @keyframes fadeInUp { 
   from { opacity: 0; transform: translateY(30px); } 
   to { opacity: 1; transform: translateY(0); } 
-}
+}6a11cb; font-size: 28px; margin-bottom: 25px; border-bottom: 3px solid #6a11cb
 
 .payment-methods h2 { color: #f5576c; font-size: 28px; margin-bottom: 25px; border-bottom: 3px solid #f5576c; padding-bottom: 15px; }
 
@@ -75,7 +92,7 @@ header p { color: #666; font-size: 16px; }
   align-items: center;
   gap: 15px;
 }
-
+6a11cb
 .payment-option:hover {
   border-color: #f5576c;
   background: rgba(245, 87, 108, 0.05);
@@ -186,7 +203,7 @@ header p { color: #666; font-size: 16px; }
 }
 
 .pay-btn {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #6a11cb, #8e44ad);
   color: white;
   padding: 15px;
   border: none;
@@ -201,7 +218,7 @@ header p { color: #666; font-size: 16px; }
 
 .pay-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+  box-shadow: 0 10px 25px rgba(106, 17, 203, 0.3);
 }
 
 footer {
