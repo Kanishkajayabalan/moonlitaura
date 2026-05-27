@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Poppins',sans-serif; background:linear-gradient(135deg,#ff9a9e,#fecfef,#a1f0ed,#ffd6a5); background-attachment:fixed; min-height:100vh; }
+        body { font-family:'Poppins',sans-serif; background:linear-gradient(135deg,#ff9a9e,#fecfef,#a1f0ed,#ffd6a5), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="moonPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse"><circle cx="100" cy="100" r="15" fill="white" opacity="0.08"/><circle cx="50" cy="50" r="8" fill="white" opacity="0.05"/><circle cx="150" cy="150" r="6" fill="white" opacity="0.04"/></pattern></defs><rect width="1200" height="800" fill="url(%23moonPattern)"/></svg>'); background-attachment:fixed; min-height:100vh; }
         
         .header { background:rgba(255,255,255,0.9); padding:20px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
         .header h1 { color:#6a11cb; font-size:36px; margin-bottom:10px; }
@@ -102,6 +102,8 @@ if (!isset($_SESSION['user_id'])) {
         <h1>🌙 MOONLIT AURA</h1>
         <div class="user-info">Welcome, <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong></div>
         <div class="header-buttons">
+            <a href="address.html" class="btn" style="background:linear-gradient(135deg,#667eea,#764ba2); color:white; text-decoration:none;">📬 Address</a>
+            <a href="payment.html" class="btn" style="background:linear-gradient(135deg,#f093fb,#f5576c); color:white; text-decoration:none;">💳 Payment</a>
             <button class="btn btn-cart" onclick="showPage('cart')">
                 🛒 Cart
                 <span class="cart-count" id="cartCount">0</span>

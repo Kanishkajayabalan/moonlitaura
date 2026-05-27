@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - Moonlit Aura</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: 'Poppins', sans-serif; 
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container { max-width: 900px; margin: 0 auto; }
+
+header { 
+  text-align: center; 
+  padding: 30px; 
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+header h1 { color: #f5576c; font-size: 36px; margin-bottom: 10px; }
+header p { color: #666; font-size: 16px; }
+
+.back-btn {
+  background: rgba(255,255,255,0.95);
+  color: #f5576c;
+  padding: 12px 30px;
+  border: 2px solid #f5576c;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #f5576c;
+  color: white;
+}
+
+.content-wrapper { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+
+.payment-methods {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp { 
+  from { opacity: 0; transform: translateY(30px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+.payment-methods h2 { color: #f5576c; font-size: 28px; margin-bottom: 25px; border-bottom: 3px solid #f5576c; padding-bottom: 15px; }
+
+.payment-option {
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.payment-option:hover {
+  border-color: #f5576c;
+  background: rgba(245, 87, 108, 0.05);
+}
+
+.payment-option input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.payment-option .icon { font-size: 32px; }
+.payment-option .info { flex: 1; }
+.payment-option .title { font-weight: 700; color: #333; font-size: 16px; }
+.payment-option .desc { color: #999; font-size: 12px; margin-top: 3px; }
+
+.card-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: none;
+}
+
+.card-form.show { display: block; animation: slideDown 0.3s ease; }
+
+@keyframes slideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 500px; } }
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #f5576c;
+  box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+}
+
+.form-row { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; }
+
+.order-summary {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeInUp 0.6s ease 0.2s both;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.order-summary h3 { color: #f5576c; font-size: 20px; margin-bottom: 20px; }
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.order-item:last-child { border-bottom: none; }
+
+.order-item .price { color: #f5576c; font-weight: 700; }
+
+.summary-divider {
+  height: 2px;
+  background: #f0f0f0;
+  margin: 15px 0;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f5576c;
+}
+
+.security-badge {
+  background: #f0f0f0;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #666;
+}
+
+.pay-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.pay-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+}
+
+footer {
+  text-align: center;
+  color: white;
+  padding: 30px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper { grid-template-columns: 1fr; }
+  .order-summary { position: relative; top: 0; }
+  .payment-methods, .order-summary { padding: 20px; }
+  header h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="address.html" class="back-btn">← Back to Address</a>
+
+  <header>
+    <h1>🌙 MOONLIT AURA</h1>
+    <p>Secure Payment Gateway</p>
+  </header>
+
+  <div class="content-wrapper">
+    <div class="payment-methods">
+      <h2>💳 Choose Payment Method</h2>
+      
+      <label class="payment-option">
+        <input type="radio" name="payment" value="card" onchange="showCardForm()" checked>
+        <div class="icon">💳</div>
+        <div class="info">
+          <div class="title">Debit / Credit Card</div>
+          <div class="desc">Visa, MasterCard, RuPay</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="upi" onchange="hideCardForm()">
+        <div class="icon">📱</div>
+        <div class="info">
+          <div class="title">UPI Payment</div>
+          <div class="desc">Google Pay, PhonePe, Paytm</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="netbanking" onchange="hideCardForm()">
+        <div class="icon">🏦</div>
+        <div class="info">
+          <div class="title">Net Banking</div>
+          <div class="desc">All major banks supported</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="wallet" onchange="hideCardForm()">
+        <div class="icon">💰</div>
+        <div class="info">
+          <div class="title">Digital Wallets</div>
+          <div class="desc">Amazon Pay, Paytm Wallet</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="cod" onchange="hideCardForm()">
+        <div class="icon">📦</div>
+        <div class="info">
+          <div class="title">Cash on Delivery</div>
+          <div class="desc">Pay when you receive</div>
+        </div>
+      </label>
+
+      <div id="cardForm" class="card-form show">
+        <h3 style="color: #333; margin-bottom: 15px; font-size: 16px;">Card Details</h3>
+        <div class="form-group">
+          <label>Card Number *</label>
+          <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+        </div>
+        <div class="form-group">
+          <label>Cardholder Name *</label>
+          <input type="text" placeholder="Full name as on card">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry Date *</label>
+            <input type="text" placeholder="MM/YY">
+          </div>
+          <div class="form-group">
+            <label>CVV *</label>
+            <input type="text" placeholder="123" maxlength="3">
+          </div>
+        </div>
+      </div>
+
+      <button class="pay-btn" onclick="processPayment()">✓ Pay Now</button>
+    </div>
+
+    <div class="order-summary">
+      <h3>📋 Order Summary</h3>
+      
+      <div class="order-item">
+        <span>Handmade Necklace</span>
+        <span class="price">₹1299</span>
+      </div>
+      <div class="order-item">
+        <span>Lavender Candle</span>
+        <span class="price">₹599</span>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="order-item">
+        <span>Subtotal</span>
+        <span class="price">₹1898</span>
+      </div>
+      <div class="order-item">
+        <span>Shipping</span>
+        <span class="price">Free</span>
+      </div>
+      <div class="order-item">
+        <span>Tax (18%)</span>
+        <span class="price">₹342</span>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="order-total">
+        <span>Total Amount</span>
+        <span>₹2240</span>
+      </div>
+
+      <div class="security-badge">
+        🔒 Your payment is secured with 256-bit SSL encryption
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Moonlit Aura | Handmade with Love 💖</p>
+</footer>
+
+<script>
+function showCardForm() {
+  document.getElementById('cardForm').classList.add('show');
+}
+
+function hideCardForm() {
+  document.getElementById('cardForm').classList.remove('show');
+}
+
+function processPayment() {
+  const method = document.querySelector('input[name="payment"]:checked').value;
+  alert('✅ Payment processing via ' + method + '...\n\nOrder placed successfully! 🎉');
+  window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>
