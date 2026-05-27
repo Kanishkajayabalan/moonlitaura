@@ -668,23 +668,20 @@ function placeOrder() {
     // Save to localStorage (persist order)
     localStorage.setItem('lastOrder', JSON.stringify(orderData));
 
-    // Show success modal
-    document.getElementById('orderId').textContent = orderId;
-    document.getElementById('successModal').classList.add('show');
-
-    // Clear cart
-    localStorage.removeItem('cart');
+    // Redirect to index.html with success parameter
+    window.location.href = 'index.html?success=true';
 }
 
 // Continue shopping
 function continueShopping() {
     localStorage.removeItem('lastOrder');
-    window.location.href = 'index.php';
+    localStorage.removeItem('cart');
+    window.location.href = 'index.html';
 }
 
 // Go back to cart
 function goBack() {
-    window.location.href = 'index.php?page=cart';
+    window.location.href = 'index.html?page=cart';
 }
 
 // Submit order via form
