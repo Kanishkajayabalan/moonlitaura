@@ -46,7 +46,13 @@ If you need PHP/Database:
   - Green checkmark icon with celebration animation
   - "Order Placed Successfully!" heading
   - Random Order ID generation
-  - Confetti falling animation with 6 celebration emojis
+  - **Enhanced Confetti Effects:**
+    - 50 confetti pieces falling (increased from 15)
+    - 14 celebration emojis: 🎉 🎊 ✨ ⭐ 💫 🌟 🎁 🎈 💝 🌸 🎀 🌺 💖
+    - Colorful circles with glow effects (RGB colors)
+    - Colorful rectangles with shadows
+    - 10 vibrant colors: Red, Teal, Blue, Coral, Green, Yellow, Purple, Light Blue, Orange, Cyan
+    - Varied rotation and fall speeds
   - Staggered animations for each element
   - "Continue Shopping" button
 - ✅ All pages now have cohesive semi-transparent white background styling
