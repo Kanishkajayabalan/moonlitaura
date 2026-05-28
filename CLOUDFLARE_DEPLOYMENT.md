@@ -31,7 +31,18 @@ If you need PHP/Database:
 
 ---
 
-## 📋 Current Status
+## Recent Updates
+
+**Latest Changes (May 28, 2026):**
+- ✅ Updated About & Products sections backgrounds to **transparent**
+- ✅ Removed white background for faded/transparent aesthetic
+- ✅ Fixed footer alignment on mobile view (stays at bottom)
+- ✅ Improved mobile responsive layout with flexbox
+- Ready to deploy to Cloudflare Pages
+
+---
+
+## Current Status
 
 **Repository:** Synced to GitHub
 **GitHub URL:** https://github.com/Kanishkajayabalan/moonlitaura
@@ -61,6 +72,8 @@ Once deployed to Cloudflare Pages:
 - ✅ Success popup
 - ✅ All hover effects
 - ✅ Mobile optimized
+- ✅ Transparent backgrounds (About & Products sections)
+- ✅ Faded/transparent styling for better visual hierarchy
 
 ---
 
