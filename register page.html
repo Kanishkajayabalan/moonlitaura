@@ -212,6 +212,11 @@
 
             else{
 
+                // Set login status
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', username);
+                localStorage.setItem('email', email);
+                
                 $("#message").html("Registration Successful ✅");
                 $("#message").css("color", "#4caf50");
                 

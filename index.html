@@ -131,8 +131,8 @@ footer { background: transparent; color: black; text-align: center; padding: 30p
 <a onclick="scrollToSection('products')">Shop</a>
 <a onclick="scrollToSection('contact')">Contact</a>
 <a onclick="showPage('cart')">Cart 🛒</a>
-<a href="login page.html" style="color: #6a11cb;">Login</a>
-<a href="register page.html" style="color: #6a11cb; background: rgba(106, 17, 203, 0.15);">Sign Up</a>
+<a style="color: #999; cursor: default;">👤 <span id="username-display"></span></a>
+<a onclick="logout()" style="color: #e91e63; background: rgba(233, 30, 99, 0.1); cursor: pointer;">Logout</a>
 </nav>
 </header>
 
@@ -227,6 +227,24 @@ footer { background: transparent; color: black; text-align: center; padding: 30p
 </footer>
 
 <script>
+// Check if user is logged in
+if(!localStorage.getItem('isLoggedIn')){
+    window.location.href = 'login page.html';
+}
+
+// Display username
+window.addEventListener('load', function(){
+    let username = localStorage.getItem('username') || 'User';
+    document.getElementById('username-display').textContent = username;
+});
+
+function logout(){
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    window.location.href = 'login page.html';
+}
+
 function showPage(page){
     document.getElementById('home').style.display = (page==='home')?'block':'none';
     document.getElementById('cart').style.display = (page==='cart')?'block':'none';

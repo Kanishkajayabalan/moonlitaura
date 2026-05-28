@@ -78,9 +78,35 @@
             margin-top:15px;
         }
 
+        button:hover {
+            background: #2a7fb8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(77, 163, 240, 0.3);
+            transition: all 0.3s ease;
+        }
+
         #message{
             margin-top:15px;
             font-size:15px;
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #4da3f0;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #2a7fb8;
+            text-decoration: underline;
         }
 
     </style>
@@ -111,6 +137,10 @@
         <button id="loginBtn">Login</button>
 
         <p id="message"></p>
+
+        <div class="register-link">
+            Don't have an account? <a onclick="goToRegister()">Register here</a>
+        </div>
 
     </div>
 
@@ -146,6 +176,10 @@
 
            if(username !== "" && password !== ""){
 
+    // Set login status
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('username', username);
+    
     $("#message").html("Login Successful ✅");
     
     // Redirect to home page after 1 second
@@ -159,6 +193,10 @@ else{
     $("#message").html("Please Enter Username and Password");
 }
         });
+
+        function goToRegister(){
+            window.location.href = 'register page.html';
+        }
 
     </script>
 
