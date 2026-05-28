@@ -20,7 +20,7 @@ body {
 body::before, body::after {
     content: "";
     position: fixed;
-    width: 350px;);
+    width: 350px;
     border-radius: 15px;
     margin-bottom: 40px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -559,23 +559,48 @@ function generateOrderId() {
 }
 
 function createConfetti() {
-  const colors = ['🎉', '✨', '🎊', '⭐', '💫', '🌟'];
+  const emojis = ['🎉', '✨', '🎊', '⭐', '💫', '🌟', '🎁', '🎈', '💝', '🌸', '🎀', '✨', '🌺', '💖'];
+  const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B88B', '#52C2C7'];
+  
   const confetti = document.createElement('div');
   confetti.className = 'confetti-piece';
-  confetti.textContent = colors[Math.floor(Math.random() * colors.length)];
+  
+  const type = Math.random();
+  
+  if (type < 0.4) {
+    // Emoji confetti
+    confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    confetti.style.fontSize = (15 + Math.random() * 15) + 'px';
+  } else if (type < 0.7) {
+    // Colored circles
+    confetti.style.width = (10 + Math.random() * 20) + 'px';
+    confetti.style.height = confetti.style.width;
+    confetti.style.borderRadius = '50%';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.boxShadow = `0 0 ${5 + Math.random() * 5}px ${colors[Math.floor(Math.random() * colors.length)]}`;
+  } else {
+    // Colored rectangles
+    confetti.style.width = (8 + Math.random() * 15) + 'px';
+    confetti.style.height = (8 + Math.random() * 15) + 'px';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.borderRadius = (Math.random() * 3) + 'px';
+    confetti.style.boxShadow = `0 0 ${3 + Math.random() * 5}px ${colors[Math.floor(Math.random() * colors.length)]}`;
+  }
+  
   confetti.style.left = Math.random() * 100 + '%';
   confetti.style.top = '-30px';
-  confetti.style.animation = `confetti ${2 + Math.random() * 1}s ease-out forwards`;
-  confetti.style.setProperty('--random-delay', Math.random() * 0.3 + 's');
+  confetti.style.animation = `confetti ${2 + Math.random() * 1.5}s ease-out forwards`;
+  confetti.style.setProperty('--random-delay', Math.random() * 0.5 + 's');
   confetti.style.animationDelay = 'var(--random-delay)';
+  confetti.style.pointerEvents = 'none';
   document.body.appendChild(confetti);
   
-  setTimeout(() => confetti.remove(), 3000);
+  setTimeout(() => confetti.remove(), 3500);
 }
 
 function launchCelebration() {
-  for (let i = 0; i < 15; i++) {
-    setTimeout(() => createConfetti(), i * 80);
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => createConfetti(), i * 60);
   }
 }
 
