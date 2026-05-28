@@ -1,5 +1,23 @@
 # 🌙 Moonlit Aura - Website Updates Summary
 
+## Latest Changes on May 28, 2026
+
+### ✅ **Cloudflare Pages Deployment Fixed**
+- Removed unnecessary wrangler.json and wrangler.toml files
+- These caused "npx wrangler deploy" error in Cloudflare
+- Static sites don't need build commands
+- Kept only _redirects for routing and caching
+- Updated deployment docs with clear fix instructions
+
+### ✅ **Critical Build Command Fix**
+- Identified root cause: build command was set in Cloudflare
+- Solution: Leave "Build command" field EMPTY in Cloudflare Pages
+- Updated DEPLOYMENT.md with 11-step fix guide
+- Updated CLOUDFLARE_SETUP.md to emphasize empty build command
+- When user clears build command and retries, site will deploy successfully
+
+---
+
 ## Changes Made on May 27, 2026
 
 ### ✅ 1. **Separate Address Page** (address.html)

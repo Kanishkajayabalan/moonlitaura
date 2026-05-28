@@ -26,18 +26,25 @@
 
 ## ⚠️ CRITICAL FIX for Build Errors
 
-If you see error: **"No loader is configured for .html files"**
+**If you see error**: "Executing user deploy command: npx wrangler deploy" or "No loader is configured"
 
-**Solution**: Leave Build command field EMPTY
+**ROOT CAUSE**: Build command is set in Cloudflare Pages settings
 
-1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
-2. Pages → moonlitaura → Settings → Builds & Deployments
-3. **Delete everything in "Build command"** (leave it empty)
-4. Confirm "Build output directory" = `.`
-5. Click Save
-6. Go to Deployments → Retry failed deployment
+**SOLUTION - IN CLOUDFLARE DASHBOARD**:
 
-**Why**: Static sites don't need building. Empty command = serve files directly.
+1. Go to https://dash.cloudflare.com
+2. Click **Pages** → **moonlitaura**
+3. Click **Settings** → **Builds & Deployments**
+4. Find "Build command" field
+5. **DELETE everything in it** (make it EMPTY)
+6. Keep "Build output directory" = `.`
+7. Click **Save**
+8. Click **Deployments** tab
+9. Click your failed deployment
+10. Click **⋮** menu → **Retry deployment**
+11. Wait 30-60 seconds for success ✅
+
+**Why**: This is a static site (no build needed). Empty build command = Cloudflare serves files directly.
 
 ---
 

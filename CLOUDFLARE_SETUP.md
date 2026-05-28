@@ -24,18 +24,16 @@ Visit: https://dash.cloudflare.com/login
 4. Search for and select: **moonlitaura**
 5. Click **"Begin setup"**
 
-### Step 3️⃣ - Configure and Deploy
+### Step 3️⃣ - Configure Build Settings
 
-**Framework preset**: None (leave blank)
+⚠️ **THIS IS CRITICAL** ⚠️
 
-**Build settings**:
-- **Build command**: ⚠️ **LEAVE EMPTY** (static site - no build needed!)
-- **Build output directory**: `.` or `/`
-- **Root directory**: (leave empty)
+**Build command**: Type nothing - leave it EMPTY  
+**Build output directory**: `.`
 
-⚠️ **CRITICAL**: Do NOT set any build command. Leave the Build command field completely EMPTY.
+Do NOT type `npx wrangler deploy` or any build command!
 
-Then click **"Save and Deploy"** 🎉
+Click **"Save and Deploy"** 🎉
 
 ---
 
