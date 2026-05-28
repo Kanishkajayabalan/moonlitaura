@@ -60,6 +60,9 @@ If you need PHP/Database:
   - Complete registration form with validation
   - Full name, email, username, password confirmation fields
   - Password strength checking (minimum 6 characters)
+  - **Handmade background image** with frosted glass effect
+  - Semi-transparent white boxes with blur backdrop filter
+  - Enhanced shadows and modern styling
   - **Required Login Flow:**
     - Users must login/register first before accessing home page
     - Redirects to login page if not authenticated
