@@ -3,11 +3,26 @@ main = "src/index.js"
 compatibility_date = "2024-01-01"
 workers_dev = true
 
+[build]
+command = ""
+
+[build.upload]
+format = "modules"
+main = "src/index.js"
+
+[[build.upload.rules]]
+type = "CompiledContentType"
+globs = ["**/*.wasm"]
+fallthrough = true
+
+[[build.upload.rules]]
+type = "Text"
+globs = ["**/*.js", "**/*.html", "**/*.css", "**/*.txt"]
+fallthrough = true
+
+[[build.upload.rules]]
+type = "Data"
+globs = ["**/*"]
+
 [site]
 bucket = "."
-
-[env.production]
-name = "moonlitaura"
-routes = [
-  { pattern = "moonlitaura.moonlitaurapagesdev.workers.dev/*" }
-]
