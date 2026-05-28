@@ -1,0 +1,110 @@
+⚠️ CLOUDFLARE DEPLOYMENT FIX - FOLLOW THESE EXACT STEPS
+
+This file is a checklist to fix the Cloudflare build error.
+
+================================================================================
+STEP 1: OPEN CLOUDFLARE DASHBOARD
+================================================================================
+Go to: https://dash.cloudflare.com/login
+
+================================================================================
+STEP 2: NAVIGATE TO YOUR PROJECT  
+================================================================================
+- Click "Pages" in left sidebar
+- Find and click "moonlitaura" project
+
+================================================================================
+STEP 3: ACCESS BUILD SETTINGS
+================================================================================
+- Click the "Settings" tab (top of page)
+- Click "Builds & Deployments" in left menu
+
+================================================================================
+STEP 4: FIND "BUILD COMMAND" FIELD (CRITICAL!)
+================================================================================
+Look for a form with these fields:
+✓ Build command
+✓ Build output directory  
+✓ Root directory
+
+================================================================================
+STEP 5: CLEAR BUILD COMMAND (THIS IS THE KEY FIX!)
+================================================================================
+In the "Build command" field:
+1. Click in the field
+2. Select all text (Ctrl+A)
+3. DELETE it completely
+4. Field should be EMPTY - you'll see blank space
+
+DO NOT type anything. Leave it completely empty.
+
+================================================================================
+STEP 6: SET BUILD OUTPUT DIRECTORY
+================================================================================
+"Build output directory" should be: .
+(that's a single period/dot)
+
+If it says something else, change it to just: .
+
+================================================================================
+STEP 7: SAVE CHANGES
+================================================================================
+Click the blue "Save" button
+
+You should see: "Settings saved successfully" message
+
+================================================================================
+STEP 8: RETRY FAILED DEPLOYMENT
+================================================================================
+- Click "Deployments" tab (top of page)
+- Look for your failed deployment (should be at the top)
+- It will show red "X" or error status
+- Click the three dots menu (⋮) on the right
+- Click "Retry deployment"
+
+================================================================================
+STEP 9: WAIT FOR BUILD TO COMPLETE
+================================================================================
+You'll see status changing:
+- "Initializing build environment..."
+- "Cloning repository..."
+- "Building..."
+- "Deploying..."
+
+Wait 30-60 seconds...
+
+================================================================================
+STEP 10: CHECK FOR SUCCESS ✅
+================================================================================
+Status should change to GREEN checkmark (✓) with message:
+"Deployed successfully!"
+
+Your site URL: https://moonlitaura.pages.dev
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+If you still see build errors:
+1. Make sure "Build command" is COMPLETELY EMPTY (not even spaces)
+2. Build output should be just: .
+3. Try "Retry deployment" again
+4. Check browser cache (Ctrl+Shift+Delete) and reload
+
+If you see "No loader for .html":
+- Build command was not actually cleared
+- Go back to step 5 and clear it again
+- Make sure it's EMPTY
+
+================================================================================
+THAT'S IT!
+================================================================================
+Your site will be live at: https://moonlitaura.pages.dev
+
+All your features will work:
+✅ Login page
+✅ Register page
+✅ Home page with sidebar menu (7 options)
+✅ Product catalog
+✅ Shopping cart
+✅ Checkout flow
