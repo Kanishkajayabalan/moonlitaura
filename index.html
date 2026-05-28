@@ -410,10 +410,12 @@ footer { background: transparent; color: black; text-align: center; padding: 30p
 </footer>
 
 <script>
-// Check if user is logged in
-if(!localStorage.getItem('isLoggedIn')){
-    window.location.href = 'login page.html';
-}
+// Check if user is logged in (with small delay to allow localStorage to be set)
+setTimeout(function(){
+    if(!localStorage.getItem('isLoggedIn')){
+        window.location.href = 'login page.html';
+    }
+}, 50);
 
 // Display username
 window.addEventListener('load', function(){
