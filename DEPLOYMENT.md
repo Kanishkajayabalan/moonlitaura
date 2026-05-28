@@ -20,6 +20,24 @@
 - ✨ Improved form validation and error messages
 - ✨ Added username display in header and sidebar
 - ✨ Enhanced animations and hover effects
+- 🔧 Fixed Cloudflare Pages configuration (wrangler.json, _redirects, wrangler.toml)
+
+---
+
+## ⚠️ CRITICAL FIX for Build Errors
+
+If you see error: **"No loader is configured for .html files"**
+
+**Solution**: Leave Build command field EMPTY
+
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
+2. Pages → moonlitaura → Settings → Builds & Deployments
+3. **Delete everything in "Build command"** (leave it empty)
+4. Confirm "Build output directory" = `.`
+5. Click Save
+6. Go to Deployments → Retry failed deployment
+
+**Why**: Static sites don't need building. Empty command = serve files directly.
 
 ---
 
@@ -34,7 +52,7 @@
 5. Choose repository: `Kanishkajayabalan/moonlitaura`
 6. Configure build settings:
    - **Framework preset:** None
-   - **Build command:** (leave empty)
+   - **Build command:** ⚠️ **LEAVE EMPTY** (no build needed for static site!)
    - **Build output directory:** `.` (root)
 7. Click **Save and Deploy**
 

@@ -33,26 +33,23 @@ Visit: https://dash.cloudflare.com/login
 - **Build output directory**: `.` or `/`
 - **Root directory**: (leave empty)
 
-⚠️ **IMPORTANT**: Do NOT set any build command. Just leave the Build command field empty.
+⚠️ **CRITICAL**: Do NOT set any build command. Leave the Build command field completely EMPTY.
 
 Then click **"Save and Deploy"** 🎉
 
 ---
 
-## If Deployment Failed Before
+## ⚠️ If Deployment Failed Before
 
-If you already tried deploying and got errors:
+If you already tried and got error: **"No loader is configured for .html files"**
 
-1. Go to Cloudflare Dashboard
-2. Navigate to **Pages** → **moonlitaura**
-3. Click **Settings** → **Builds & Deployments**
-4. **Clear the Build command** field completely (make it empty)
-5. Set **Build output directory** to `.`
-6. Click **Deployments** tab
-7. Find the failed deployment
-8. Click **Retry Deployment** ✅
+### Quick Fix (3 steps):
 
-See [CLOUDFLARE_FIX.md](CLOUDFLARE_FIX.md) for detailed troubleshooting.
+1. **Settings** → **Builds & Deployments**
+2. **Delete** the "Build command" field (leave it empty)
+3. Click **Deployments** → **Retry Deployment**
+
+See DEPLOYMENT.md for more details.
 
 ---
 ```
