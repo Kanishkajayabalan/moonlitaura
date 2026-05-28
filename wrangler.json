@@ -1,0 +1,45 @@
+{
+  "name": "moonlitaura",
+  "main": "index.html",
+  "type": "module",
+  "pages_build_output_dir": ".",
+  "triggers": {
+    "on_production_branch": "main"
+  },
+  "env": {
+    "production": {
+      "routes": [
+        {
+          "pattern": "*.html",
+          "cache": {
+            "default_ttl": 3600
+          }
+        },
+        {
+          "pattern": "*.css",
+          "cache": {
+            "default_ttl": 86400
+          }
+        },
+        {
+          "pattern": "*.js",
+          "cache": {
+            "default_ttl": 86400
+          }
+        },
+        {
+          "pattern": "*.webp",
+          "cache": {
+            "default_ttl": 604800
+          }
+        },
+        {
+          "pattern": "*.jpg",
+          "cache": {
+            "default_ttl": 604800
+          }
+        }
+      ]
+    }
+  }
+}
