@@ -34,8 +34,7 @@ If you need PHP/Database:
 ## Recent Updates
 
 **Latest Changes (May 28, 2026):**
-- ✅ Updated About & Products sections backgrounds to **transparent**
-- ✅ Removed white background for faded/transparent aesthetic
+- ✅ About & Products sections backgrounds set to **white**
 - ✅ Fixed footer alignment on mobile view (stays at bottom)
 - ✅ Improved mobile responsive layout with flexbox
 - Ready to deploy to Cloudflare Pages
