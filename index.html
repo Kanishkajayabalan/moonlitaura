@@ -184,6 +184,19 @@ button:active { transform: translateY(-1px); }
 .sidebar-menu li:nth-child(4) a::before { content: "🏷️"; }
 .sidebar-menu li:nth-child(5) a::before { content: "❤️"; }
 .sidebar-menu li:nth-child(6) a::before { content: "📋"; }
+.sidebar-menu li:nth-child(7) a::before { content: "🚪"; }
+
+.sidebar-menu li:last-child {
+  margin-top: 20px;
+  border-top: 2px solid rgba(106, 17, 203, 0.1);
+  padding-top: 20px;
+}
+
+.sidebar-menu li:last-child a:hover {
+  color: #e91e63;
+  border-left-color: #e91e63;
+  background: rgba(233, 30, 99, 0.08);
+}
 
 .sidebar-toggle {
   position: fixed;
@@ -249,6 +262,7 @@ button:active { transform: translateY(-1px); }
 .sidebar.active .sidebar-menu li:nth-child(4) a { animation-delay: 0.2s; }
 .sidebar.active .sidebar-menu li:nth-child(5) a { animation-delay: 0.25s; }
 .sidebar.active .sidebar-menu li:nth-child(6) a { animation-delay: 0.3s; }
+.sidebar.active .sidebar-menu li:nth-child(7) a { animation-delay: 0.35s; }
 
 footer { background: transparent; color: black; text-align: center; padding: 30px; margin-top: 50px; position: relative; z-index: 1; font-weight: 500; }
 
@@ -282,8 +296,6 @@ footer { background: transparent; color: black; text-align: center; padding: 30p
 <a onclick="scrollToSection('products')">Shop</a>
 <a onclick="scrollToSection('contact')">Contact</a>
 <a onclick="showPage('cart')">Cart 🛒</a>
-<a style="color: #999; cursor: default;">👤 <span id="username-display"></span></a>
-<a onclick="logout()" style="color: #e91e63; background: rgba(233, 30, 99, 0.1); cursor: pointer;">Logout</a>
 </nav>
 </header>
 
@@ -303,6 +315,7 @@ footer { background: transparent; color: black; text-align: center; padding: 30p
     <li><a href="#" onclick="showCategories()">Categories</a></li>
     <li><a href="#" onclick="showWishlist()">Wishlist</a></li>
     <li><a href="#" onclick="showMyOrders()">My Orders</a></li>
+    <li><a href="#" onclick="logout()">Logout</a></li>
   </ul>
 </aside>
 
