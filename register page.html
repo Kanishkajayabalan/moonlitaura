@@ -11,7 +11,7 @@
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <title>Login Page</title>
+    <title>Register Page</title>
 
     <style>
 
@@ -20,15 +20,16 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg,#ff9a9e,#fecfef,#a1f0ed,#ffd6a5);
             background-attachment: fixed;
-            height:100vh;
+            min-height:100vh;
             display:flex;
             justify-content:center;
             align-items:center;
+            padding: 20px;
         }
 
-        .login-box{
+        .register-box{
             background:#f2f2f2;
-            width:320px;
+            width:350px;
             padding:40px;
             border-radius:15px;
             text-align:center;
@@ -37,6 +38,7 @@
 
         h2{
             margin-bottom:30px;
+            color: #333;
         }
 
         input{
@@ -71,11 +73,19 @@
             padding:12px;
             border:none;
             border-radius:5px;
-            background:#4da3f0;
+            background:#6a11cb;
             color:white;
             font-size:18px;
             cursor:pointer;
             margin-top:15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #4a0b8b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
         }
 
         #message{
@@ -83,14 +93,41 @@
             font-size:15px;
         }
 
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #4a0b8b;
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 
 <body>
 
-    <div class="login-box">
+    <div class="register-box">
 
-        <h2>Login</h2>
+        <h2>Create Account</h2>
+
+        <input type="text"
+        id="fullname"
+        placeholder="Full Name">
+
+        <input type="email"
+        id="email"
+        placeholder="Email Address">
 
         <input type="text"
         id="username"
@@ -108,9 +145,17 @@
 
         </div>
 
-        <button id="loginBtn">Login</button>
+        <input type="password"
+        id="confirmPassword"
+        placeholder="Confirm Password">
+
+        <button id="registerBtn">Register</button>
 
         <p id="message"></p>
+
+        <div class="login-link">
+            Already have an account? <a onclick="goToLogin()">Login here</a>
+        </div>
 
     </div>
 
@@ -139,26 +184,47 @@
             }
         });
 
-        $("#loginBtn").click(function(){
+        $("#registerBtn").click(function(){
 
+            let fullname = $("#fullname").val();
+            let email = $("#email").val();
             let username = $("#username").val();
             let password = $("#password").val();
+            let confirmPassword = $("#confirmPassword").val();
 
-           if(username !== "" && password !== ""){
+            if(fullname === "" || email === "" || username === "" || password === "" || confirmPassword === ""){
 
-    $("#message").html("Login Successful ✅");
-    
-    // Redirect to home page after 1 second
-    setTimeout(function(){
-        window.location.href = 'index.html';
-    }, 1000);
-}
+                $("#message").html("Please fill all fields");
+                $("#message").css("color", "#e91e63");
+            }
 
-else{
+            else if(password !== confirmPassword){
 
-    $("#message").html("Please Enter Username and Password");
-}
+                $("#message").html("Passwords do not match");
+                $("#message").css("color", "#e91e63");
+            }
+
+            else if(password.length < 6){
+
+                $("#message").html("Password must be at least 6 characters");
+                $("#message").css("color", "#e91e63");
+            }
+
+            else{
+
+                $("#message").html("Registration Successful ✅");
+                $("#message").css("color", "#4caf50");
+                
+                // Redirect to home page after 1.5 seconds
+                setTimeout(function(){
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
         });
+
+        function goToLogin(){
+            window.location.href = 'login page.html';
+        }
 
     </script>
 
