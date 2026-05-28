@@ -34,7 +34,10 @@ If you need PHP/Database:
 ## Recent Updates
 
 **Latest Changes (May 28, 2026):**
-- ✅ About & Products sections backgrounds set to **white**
+- ✅ About section background updated to `rgba(255, 255, 255, 0.7)` (frosted glass effect)
+- ✅ Products section background updated to `rgba(255, 255, 255, 0.7)` (matches header)
+- ✅ Individual product cards background updated to `rgba(255, 255, 255, 0.7)` for consistency
+- ✅ All sections now have cohesive semi-transparent white background styling
 - ✅ Fixed footer alignment on mobile view (stays at bottom)
 - ✅ Improved mobile responsive layout with flexbox
 - Ready to deploy to Cloudflare Pages
@@ -71,7 +74,10 @@ Once deployed to Cloudflare Pages:
 - ✅ Success popup
 - ✅ All hover effects
 - ✅ Mobile optimized
-- ✅ Transparent backgrounds (About & Products sections)
+- ✅ Header with semi-transparent white background (rgba(255, 255, 255, 0.7))
+- ✅ About section with frosted glass effect background
+- ✅ Products grid with transparent white background
+- ✅ Individual product cards with matching header styling
 - ✅ Faded/transparent styling for better visual hierarchy
 
 ---
