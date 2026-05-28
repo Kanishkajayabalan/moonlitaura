@@ -55,6 +55,15 @@ If you need PHP/Database:
     - Varied rotation and fall speeds
   - Staggered animations for each element
   - "Continue Shopping" button
+- ✅ **NEW: Login & Register Pages** 👤
+  - Beautiful login page with password visibility toggle
+  - Complete registration form with validation
+  - Full name, email, username, password confirmation fields
+  - Password strength checking (minimum 6 characters)
+  - "Already have account?" link for easy navigation
+  - **Auto-redirect to home page after successful login/registration** ✅
+  - Navigation links in header: "Login" and "Sign Up" buttons
+  - Matches Moonlit Aura brand colors and styling
 - ✅ All pages now have cohesive semi-transparent white background styling
 - 🎉 Ready to deploy to Cloudflare Pages
 
