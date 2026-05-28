@@ -71,7 +71,31 @@ If you need PHP/Database:
   - Logout button clears session and returns to login
   - "Don't have account?" and "Already have account?" links
   - Matches Moonlit Aura brand colors and styling
-- ✅ All pages now have cohesive semi-transparent white background styling
+- ✅ **NEW: Modern Glassmorphism Sidebar Menu** 📱
+  - Beautiful frosted glass effect with backdrop blur (20px)
+  - Smooth slide-in animation from left (cubic-bezier timing)
+  - Semi-transparent white background (85% opacity)
+  - Soft shadows and border styling
+  - **Menu Items:**
+    - 👤 Profile
+    - 📦 Orders
+    - 🚚 Track Order
+    - 🏷️ Categories
+    - ❤️ Wishlist
+    - 📋 My Orders
+  - Hover effects with smooth transitions
+  - Animated menu items with staggered delays
+  - Left border highlight on hover
+  - Displays logged-in username
+  - **Mobile Responsive:**
+    - Hamburger menu button (☰) on mobile devices
+    - Toggle button with purple gradient styling
+    - Overlay background click to close
+    - Smooth animations on all interactions
+    - Auto-closes after menu item click
+  - Desktop: Available on demand
+  - Modern design with rounded corners and soft shadows
+- ✅ All pages now have cohesive semi-transparent white background styling with glassmorphism effects
 - 🎉 Ready to deploy to Cloudflare Pages
 
 ---
