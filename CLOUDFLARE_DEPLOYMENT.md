@@ -60,9 +60,13 @@ If you need PHP/Database:
   - Complete registration form with validation
   - Full name, email, username, password confirmation fields
   - Password strength checking (minimum 6 characters)
-  - "Already have account?" link for easy navigation
-  - **Auto-redirect to home page after successful login/registration** ✅
-  - Navigation links in header: "Login" and "Sign Up" buttons
+  - **Required Login Flow:**
+    - Users must login/register first before accessing home page
+    - Redirects to login page if not authenticated
+    - Auto-redirect to home after successful login/registration
+  - Navigation links in header with username display
+  - Logout button clears session and returns to login
+  - "Don't have account?" and "Already have account?" links
   - Matches Moonlit Aura brand colors and styling
 - ✅ All pages now have cohesive semi-transparent white background styling
 - 🎉 Ready to deploy to Cloudflare Pages
