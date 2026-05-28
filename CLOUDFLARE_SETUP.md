@@ -29,15 +29,32 @@ Visit: https://dash.cloudflare.com/login
 **Framework preset**: None (leave blank)
 
 **Build settings**:
-- Build command: (leave empty)
-- Build output directory: `.` or `/`
-- Root directory: (leave empty)
+- **Build command**: ⚠️ **LEAVE EMPTY** (static site - no build needed!)
+- **Build output directory**: `.` or `/`
+- **Root directory**: (leave empty)
+
+⚠️ **IMPORTANT**: Do NOT set any build command. Just leave the Build command field empty.
 
 Then click **"Save and Deploy"** 🎉
 
 ---
 
-## Your Site Will Be Live At:
+## If Deployment Failed Before
+
+If you already tried deploying and got errors:
+
+1. Go to Cloudflare Dashboard
+2. Navigate to **Pages** → **moonlitaura**
+3. Click **Settings** → **Builds & Deployments**
+4. **Clear the Build command** field completely (make it empty)
+5. Set **Build output directory** to `.`
+6. Click **Deployments** tab
+7. Find the failed deployment
+8. Click **Retry Deployment** ✅
+
+See [CLOUDFLARE_FIX.md](CLOUDFLARE_FIX.md) for detailed troubleshooting.
+
+---
 ```
 https://moonlitaura.pages.dev
 ```

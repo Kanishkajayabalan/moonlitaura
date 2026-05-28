@@ -1,0 +1,8 @@
+name = "moonlitaura"
+type = "javascript"
+account_id = ""
+workers_dev = false
+
+[env.production]
+route = "https://moonlitaura.pages.dev/*"
+zone_id = ""

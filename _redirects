@@ -1,0 +1,30 @@
+# Redirect rules for Cloudflare Pages
+# All requests serve from the root directory (static files)
+
+# Single Page Application - route all requests to index.html if file not found
+/* /index.html 200
+
+# Cache control headers
+/index.html 200
+  Cache-Control: max-age=3600
+
+/*.js 200
+  Cache-Control: max-age=86400
+
+/*.css 200
+  Cache-Control: max-age=86400
+
+/*.webp 200
+  Cache-Control: max-age=604800
+
+/*.jpg 200
+  Cache-Control: max-age=604800
+
+/*.png 200
+  Cache-Control: max-age=604800
+
+/*.jpeg 200
+  Cache-Control: max-age=604800
+
+/*.gif 200
+  Cache-Control: max-age=604800
