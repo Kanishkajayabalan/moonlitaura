@@ -92,6 +92,19 @@
         #message{
             margin-top:15px;
             font-size:15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        #message:not(:empty) {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-link {
@@ -187,45 +200,52 @@
 
         $("#registerBtn").click(function(){
 
-            let fullname = $("#fullname").val();
-            let email = $("#email").val();
-            let username = $("#username").val();
-            let password = $("#password").val();
-            let confirmPassword = $("#confirmPassword").val();
+            let fullname = $("#fullname").val().trim();
+            let email = $("#email").val().trim();
+            let username = $("#username").val().trim();
+            let password = $("#password").val().trim();
+            let confirmPassword = $("#confirmPassword").val().trim();
 
+            // Validation
             if(fullname === "" || email === "" || username === "" || password === "" || confirmPassword === ""){
-
-                $("#message").html("Please fill all fields");
+                $("#message").html("❌ Please fill all fields");
                 $("#message").css("color", "#e91e63");
+                return;
             }
 
-            else if(password !== confirmPassword){
-
-                $("#message").html("Passwords do not match");
+            // Email validation
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailRegex.test(email)){
+                $("#message").html("❌ Please enter a valid email");
                 $("#message").css("color", "#e91e63");
+                return;
             }
 
-            else if(password.length < 6){
-
-                $("#message").html("Password must be at least 6 characters");
+            if(password !== confirmPassword){
+                $("#message").html("❌ Passwords do not match");
                 $("#message").css("color", "#e91e63");
+                return;
             }
 
-            else{
-
-                // Set login status
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('username', username);
-                localStorage.setItem('email', email);
-                
-                $("#message").html("Registration Successful ✅");
-                $("#message").css("color", "#4caf50");
-                
-                // Redirect to home page after 1.5 seconds
-                setTimeout(function(){
-                    window.location.href = 'index.html';
-                }, 1500);
+            if(password.length < 6){
+                $("#message").html("❌ Password must be at least 6 characters");
+                $("#message").css("color", "#e91e63");
+                return;
             }
+
+            // Set login status
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', username);
+            localStorage.setItem('email', email);
+            localStorage.setItem('fullname', fullname);
+            
+            $("#message").html("✅ Registration Successful! Redirecting...");
+            $("#message").css("color", "#4caf50");
+            
+            // Redirect to home page after 1.5 seconds
+            setTimeout(function(){
+                window.location.href = 'index.html';
+            }, 1500);
         });
 
         function goToLogin(){

@@ -410,25 +410,30 @@ footer { background: transparent; color: black; text-align: center; padding: 30p
 </footer>
 
 <script>
-// Check if user is logged in (with small delay to allow localStorage to be set)
-setTimeout(function(){
+// Check if user is logged in - redirect to login if not
+window.addEventListener('load', function(){
     if(!localStorage.getItem('isLoggedIn')){
         window.location.href = 'login page.html';
+        return;
     }
-}, 50);
-
-// Display username
-window.addEventListener('load', function(){
+    
+    // Display username in header and sidebar
     let username = localStorage.getItem('username') || 'User';
-    document.getElementById('username-display').textContent = username;
-    document.getElementById('sidebar-username').textContent = username;
+    let usernameElement = document.getElementById('username-display');
+    let sidebarUsernameElement = document.getElementById('sidebar-username');
+    
+    if(usernameElement) usernameElement.textContent = username;
+    if(sidebarUsernameElement) sidebarUsernameElement.textContent = '👋 Welcome, ' + username;
 });
 
 function logout(){
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('username');
-    localStorage.removeItem('email');
-    window.location.href = 'login page.html';
+    if(confirm('Are you sure you want to logout?')){
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('cart');
+        window.location.href = 'login page.html';
+    }
 }
 
 function toggleSidebar(){

@@ -89,6 +89,19 @@
         #message{
             margin-top:15px;
             font-size:15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        #message:not(:empty) {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .register-link {
@@ -172,27 +185,32 @@
 
         $("#loginBtn").click(function(){
 
-            let username = $("#username").val();
-            let password = $("#password").val();
+            let username = $("#username").val().trim();
+            let password = $("#password").val().trim();
 
-           if(username !== "" && password !== ""){
+            if(username === "" || password === ""){
+                $("#message").html("❌ Please Enter Username and Password");
+                $("#message").css("color", "#e91e63");
+                return;
+            }
 
-    // Set login status
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('username', username);
-    
-    $("#message").html("Login Successful ✅");
-    
-    // Redirect to home page after 1 second
-    setTimeout(function(){
-        window.location.href = 'index.html';
-    }, 1000);
-}
+            if(password.length < 3){
+                $("#message").html("❌ Password must be at least 3 characters");
+                $("#message").css("color", "#e91e63");
+                return;
+            }
 
-else{
-
-    $("#message").html("Please Enter Username and Password");
-}
+            // Set login status
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', username);
+            
+            $("#message").html("✅ Login Successful! Redirecting...");
+            $("#message").css("color", "#4caf50");
+            
+            // Redirect to home page after 1.2 seconds
+            setTimeout(function(){
+                window.location.href = 'index.html';
+            }, 1200);
         });
 
         function goToRegister(){
