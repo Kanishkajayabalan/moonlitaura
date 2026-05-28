@@ -88,16 +88,17 @@ button:active { transform: translateY(-1px); }
 .success-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; }
 .success-modal-overlay.show { display: flex; animation: fadeInOverlay 0.3s ease; }
 @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
-.success-modal { background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%); border-radius: 25px; padding: 50px 40px; text-align: center; max-width: 500px; width: 90%; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3); position: relative; z-index: 1001; animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.success-modal { background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%); border-radius: 30px; padding: 60px 40px; text-align: center; max-width: 550px; width: 90%; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3); position: relative; z-index: 1001; animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid rgba(76, 175, 80, 0.1); }
 @keyframes popIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-.success-check { width: 80px; height: 80px; margin: 0 auto 30px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; color: white; animation: scaleCheckmark 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.success-check { width: 100px; height: 100px; margin: 0 auto 30px; background: linear-gradient(135deg, #4CAF50, #45a049); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 60px; color: white; animation: scaleCheckmark 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), pulse 1.5s ease-in-out 0.6s infinite; box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3); }
 @keyframes scaleCheckmark { from { transform: scale(0) rotate(-45deg); } to { transform: scale(1) rotate(0); } }
+@keyframes pulse { 0%, 100% { box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3); } 50% { box-shadow: 0 10px 50px rgba(76, 175, 80, 0.6); } }
 
-.success-modal h2 { color: #6a11cb; font-size: 32px; margin-bottom: 15px; }
-.success-modal p { color: #666; font-size: 16px; margin: 15px 0; line-height: 1.6; }
-.order-id-box { background: #f0f0f0; padding: 20px; border-radius: 12px; margin: 25px 0; border-left: 5px solid #6a11cb; }
-.order-id-box span { display: block; font-size: 24px; font-weight: 700; color: #6a11cb; word-break: break-all; }
+.success-modal h2 { color: #6a11cb; font-size: 36px; margin-bottom: 15px; font-weight: 800; letter-spacing: -0.5px; }
+.success-modal p { color: #666; font-size: 16px; margin: 15px 0; line-height: 1.6; font-weight: 500; }
+.order-id-box { background: #f5f5f5; padding: 20px; border-radius: 15px; margin: 25px 0; border: 2px solid #f0f0f0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+.order-id-box span { display: block; font-size: 22px; font-weight: 700; color: #333; word-break: break-all; }
 
 .confetti { position: fixed; width: 10px; height: 10px; pointer-events: none; z-index: 1002; }
 @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
@@ -307,16 +308,19 @@ function buyNow(name, price){
 }
 
 function createConfetti(){
-    const colors = ['#ff6b6b', '#6a11cb', '#e91e63', '#ff9800', '#4CAF50', '#00bcd4'];
-    for(let i = 0; i < 50; i++){
+    const colors = ['#ff6b6b', '#6a11cb', '#e91e63', '#ff9800', '#4CAF50', '#00bcd4', '#ffd700', '#ff69b4'];
+    for(let i = 0; i < 80; i++){
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         confetti.style.left = Math.random() * window.innerWidth + 'px';
         confetti.style.top = '-10px';
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-        const animationDuration = 2 + Math.random() * 1 + 's';
-        const delay = Math.random() * 0.5 + 's';
+        confetti.style.width = (Math.random() * 6 + 4) + 'px';
+        confetti.style.height = (Math.random() * 6 + 4) + 'px';
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+        confetti.style.opacity = Math.random() * 0.7 + 0.3;
+        const animationDuration = 2.5 + Math.random() * 1.5 + 's';
+        const delay = Math.random() * 0.3 + 's';
         
         if(Math.random() > 0.5){
             confetti.style.animation = `confetti-left ${animationDuration} ease-in ${delay} forwards`;
@@ -333,7 +337,10 @@ function showSuccessModal(){
     const orderId = '#ML' + new Date().getFullYear() + Math.random().toString().substr(2, 6);
     document.getElementById('orderId').textContent = orderId;
     document.getElementById('successModal').classList.add('show');
+    // Create multiple confetti bursts for enhanced celebration
     createConfetti();
+    setTimeout(() => createConfetti(), 300);
+    setTimeout(() => createConfetti(), 600);
 }
 
 function continueShopping(){
