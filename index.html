@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moonlit Aura - Handmade Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+// Function to logout
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('email');
+    localStorage.removeItem('fullname');
+    window.location.href = 'login.php';
+}
+</script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: url('handmade background.png') center/cover no-repeat fixed; background-color: #f5f5f5; display: flex; flex-direction: column; min-height: 100vh; }
+h1, h2, h3 { font-weight: 700; }
+p, li { font-weight: 500; }
+body::before, body::after { content: ""; position: fixed; width: 350px; height: 350px; background: rgba(255, 255, 255, 0.15); border-radius: 50%; z-index: 0; }
+body::before { top: -120px; left: -120px; }
+body::after { bottom: -120px; right: -120px; }
+
+header { text-align: center; padding: 25px; color: rgb(12, 12, 12); position: relative; z-index: 1; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); margin-bottom: 10px; border-radius: 0 0 15px 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+header h1 { font-size: 42px; animation: slideDown 0.6s ease; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+nav a { text-decoration: none; color: rgb(10, 10, 10); margin: 0 15px; font-weight: 600; cursor: pointer; position: relative; transition: all 0.3s ease; padding: 5px 10px; border-radius: 5px; }
+nav a:hover { color: #6a11cb; background: rgba(106, 17, 203, 0.1); transform: translateY(-2px); }
+nav a::after { content: ''; position: absolute; bottom: -3px; left: 10px; right: 10px; height: 2px; background: #6a11cb; opacity: 0; transition: all 0.3s ease; }
+nav a:hover::after { opacity: 1; }
+
+#home, #cart { flex: 1; }
+
+.about { background: rgba(255, 255, 255, 0.7); margin: 40px; padding: 50px 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); text-align: center; position: relative; overflow: hidden; transition: all 0.3s ease; animation: fadeInUp 0.6s ease 0.1s both; }
+.about:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.15); transform: translateY(-5px); }
+.about h2 { color: #6a11cb; font-size: 32px; margin-bottom: 20px; }
+.about p { color: #333; line-height: 1.8; font-size: 16px; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.quotes { text-align: center; background: rgba(255, 255, 255, 0.7); color: #333; margin: 40px; padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(106, 17, 203, 0.3); transition: all 0.3s ease; animation: fadeInUp 0.6s ease 0.2s both; }
+.quotes:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(106, 17, 203, 0.4); }
+.quotes h2 { font-size: 28px; margin-bottom: 15px; }
+.quotes p { font-size: 18px; }
+
+.cart-container { text-align: center; background: white; margin: 40px; padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.12); animation: fadeInUp 0.6s ease both; }
+.cart-container h1 { color: #6a11cb; margin-bottom: 30px; }
+
+.contact { background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(245,245,250,0.95)); margin: 40px; padding: 50px 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); transition: all 0.3s ease; animation: fadeInUp 0.6s ease 0.3s both; border-left: 5px solid #6a11cb; }
+.contact:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.2); transform: translateY(-5px); }
+.contact h2 { text-align: center; color: #6a11cb; font-size: 32px; margin-bottom: 30px; }
+.contact > div { text-align: center; }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 30px; }
+.contact-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+.contact-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(106, 17, 203, 0.15); }
+.contact-card .icon { font-size: 32px; margin-bottom: 12px; }
+.contact-card .label { color: #6a11cb; font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+.contact-card .info { color: #333; line-height: 1.6; font-size: 14px; }
+
+.products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 40px; background: rgba(255, 255, 255, 0.7); animation: fadeInUp 0.6s ease 0.2s both; }
+.card { background: rgba(255, 255, 255, 0.7); border-radius: 18px; padding: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: grid; grid-template-columns: 1fr 1fr; gap: 10px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; }
+.card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s ease; z-index: 0; }
+.card:hover::before { left: 100%; }
+.card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 50px rgba(106, 17, 203, 0.2); }
+.card img { grid-column: 1 / -1; width: 100%; height: 200px; object-fit: cover; border-radius: 12px; transition: transform 0.3s ease; }
+.card:hover img { transform: scale(1.08); }
+.card h3, .card .rating, .card p, .card .price { grid-column: 1 / -1; position: relative; z-index: 1; }
+.card h3 { color: #333; font-size: 18px; margin-bottom: 5px; }
+.card .rating { color: #ff9800; font-weight: 600; font-size: 14px; }
+.card p { color: #666; font-size: 14px; margin: 8px 0; }
+.card .price { font-weight: 700; color: #e91e63; font-size: 20px; }
+.card button { padding: 12px 18px; font-size: 14px; font-weight: 600; width: 100%; cursor: pointer; transition: all 0.3s ease; border: none; border-radius: 10px; position: relative; z-index: 1; }
+.card button:nth-child(6) { background: #6a11cb; color: white; }
+.card button:nth-child(6):hover { background: #4a0b8b; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(106, 17, 203, 0.3); }
+.card button:nth-child(7) { background: #ff6b6b; color: white; margin-top: 8px; }
+.card button:nth-child(7):hover { background: #ff4545; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3); }
+
+.cart-page { display: none; }
+.cart-item { display: grid; grid-template-columns: 2fr 1fr 100px 100px; align-items: center; padding: 20px; border-bottom: 2px solid #f0f0f0; gap: 15px; background: #f9f9f9; margin-bottom: 10px; border-radius: 10px; transition: all 0.3s ease; }
+.cart-item:hover { background: #f0f0f0; transform: translateX(5px); }
+.cart-item span:first-child { text-align: left; font-weight: 600; color: #333; }
+.cart-item span:nth-child(2) { text-align: center; font-weight: 700; color: #e91e63; }
+.quantity-control { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.quantity-control button { padding: 8px 12px; font-size: 14px; font-weight: 700; background: #6a11cb; color: white; border: none; border-radius: 6px; cursor: pointer; min-width: 35px; transition: all 0.2s ease; }
+.quantity-control button:hover { background: #4a0b8b; transform: scale(1.1); }
+.quantity-number { font-weight: 700; min-width: 35px; text-align: center; color: #333; }
+.cart-item button.remove-btn { padding: 8px 12px; justify-self: center; background: #ff6b6b; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; }
+.cart-item button.remove-btn:hover { background: #ff4545; transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3); }
+.cart-total { font-weight: 700; text-align: right; margin-top: 20px; padding-top: 20px; border-top: 3px solid #6a11cb; font-size: 18px; color: #6a11cb; }
+
+button { background: #6a11cb; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: 700; transition: all 0.3s ease; font-family: 'Poppins', sans-serif; font-size: 16px; }
+button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(106, 17, 203, 0.3); }
+button:active { transform: translateY(-1px); }
+
+/* SUCCESS MODAL */
+.success-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; }
+.success-modal-overlay.show { display: flex; animation: fadeInOverlay 0.3s ease; }
+@keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
+.success-modal { background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%); border-radius: 25px; padding: 50px 40px; text-align: center; max-width: 500px; width: 90%; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3); position: relative; z-index: 1001; animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes popIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+.success-check { width: 80px; height: 80px; margin: 0 auto 30px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; color: white; animation: scaleCheckmark 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes scaleCheckmark { from { transform: scale(0) rotate(-45deg); } to { transform: scale(1) rotate(0); } }
+
+.success-modal h2 { color: #6a11cb; font-size: 32px; margin-bottom: 15px; }
+.success-modal p { color: #666; font-size: 16px; margin: 15px 0; line-height: 1.6; }
+.order-id-box { background: #f0f0f0; padding: 20px; border-radius: 12px; margin: 25px 0; border-left: 5px solid #6a11cb; }
+.order-id-box span { display: block; font-size: 24px; font-weight: 700; color: #6a11cb; word-break: break-all; }
+
+.confetti { position: fixed; width: 10px; height: 10px; pointer-events: none; z-index: 1002; }
+@keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+@keyframes confetti-left { to { transform: translateX(-100vw) translateY(100vh) rotate(360deg); opacity: 0; } }
+@keyframes confetti-right { to { transform: translateX(100vw) translateY(100vh) rotate(360deg); opacity: 0; } }
+
+footer { background: transparent; color: black; text-align: center; padding: 30px; margin-top: 50px; position: relative; z-index: 1; font-weight: 500; }
+
+@media (max-width: 768px) {
+    .products { grid-template-columns: 1fr; padding: 20px; }
+    .about, .quotes, .contact, .cart-container { margin: 20px; padding: 25px; }
+    header h1 { font-size: 32px; }
+    nav a { margin: 0 8px; font-size: 14px; }
+    .cart-item { grid-template-columns: 1fr; gap: 10px; }
+    .cart-item span:first-child { text-align: center; }
+    .contact > div { min-width: 90%; }
+    .success-modal { padding: 30px 20px; }
+    footer { margin-top: auto; padding: 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌙 MOONLIT AURA</h1>
+<nav>
+<a onclick="showPage('home')">Home</a>
+<a onclick="scrollToSection('about')">About</a>
+<a onclick="scrollToSection('products')">Shop</a>
+<a onclick="showPage('cart')">Cart 🛒</a>
+<a onclick="logout()" style="color: #e91e63; font-weight: 700;">Logout</a>
+</nav>
+</header>
+
+<div id="home">
+
+<section class="about" id="about">
+<h2>✨ About Our Store</h2>
+<p>Welcome to our handmade world! ✨ At Moonlit Aura, we create and curate beautiful handcrafted items made with love and care. From elegant jewelry to cozy home décor, each piece is designed to bring joy and uniqueness into your life. We proudly support local artisans and small creators who put their heart into every product. Our goal is to offer high-quality handmade items that are special, sustainable, and affordable. Thank you for supporting handmade and choosing something truly one-of-a-kind.</p>
+</section>
+
+<section class="quotes" id="quotes">
+<h2>Where creativity 🎀 meets the glow of the moon 🌙</h2>
+<p>Moonlight 🌙 handmade magic ✨ gives perfect harmony 🎗️ 💖</p>
+</section>
+
+<section class="products" id="products">
+<div class="card"><img src="handmade silver necklace.webp" alt="Handmade Silver Necklace"><h3>Handmade Silver Necklace</h3><div class="rating">★★★★★ (4.8)</div><p>Elegant handcrafted premium necklace.</p><div class="price">₹1299</div><button onclick="addToCart('Handmade Silver Necklace',1299)">Add to Cart</button><button onclick="buyNow('Handmade Silver Necklace',1299)">Buy Now</button></div>
+<div class="card"><img src="lavender candle.jpg" alt="Organic Lavender Candle"><h3>Organic Lavender Candle</h3><div class="rating">★★★★☆ (4.6)</div><p>Natural soy wax relaxing candle.</p><div class="price">₹599</div><button onclick="addToCart('Organic Lavender Candle',599)">Add to Cart</button><button onclick="buyNow('Organic Lavender Candle',599)">Buy Now</button></div>
+<div class="card"><img src="crochet handbag.jpg" alt="Crochet Handbag"><h3>Crochet Handmade Handbag</h3><div class="rating">★★★★★ (5.0)</div><p>Stylish handmade cotton crochet bag.</p><div class="price">₹1499</div><button onclick="addToCart('Crochet Handbag',1499)">Add to Cart</button><button onclick="buyNow('Crochet Handbag',1499)">Buy Now</button></div>
+<div class="card"><img src="resin art frame.webp" alt="Resin Art Frame"><h3>Premium Resin Art Frame</h3><div class="rating">★★★★☆ (4.7)</div><p>Beautiful handcrafted resin wall art.</p><div class="price">₹2199</div><button onclick="addToCart('Resin Art Frame',2199)">Add to Cart</button><button onclick="buyNow('Resin Art Frame',2199)">Buy Now</button></div>
+<div class="card"><img src="wood box.webp" alt="Wooden Jewelry Box"><h3>Wooden Jewelry Box</h3><div class="rating">★★★★★ (4.9)</div><p>Premium handcrafted storage box.</p><div class="price">₹1899</div><button onclick="addToCart('Wooden Jewelry Box',1899)">Add to Cart</button><button onclick="buyNow('Wooden Jewelry Box',1899)">Buy Now</button></div>
+<div class="card"><img src="handmade diary.webp" alt="Handmade Diary"><h3>Handmade Diary</h3><div class="rating">★★★★☆ (4.5)</div><p>Eco-friendly recycled paper journal.</p><div class="price">₹799</div><button onclick="addToCart('Handmade Diary',799)">Add to Cart</button><button onclick="buyNow('Handmade Diary',799)">Buy Now</button></div>
+<div class="card"><img src="clay pot.jpg" alt="Clay Pot Set"><h3>Clay Pot Set</h3><div class="rating">★★★★★ (5.0)</div><p>Traditional handcrafted clay pots.</p><div class="price">₹1299</div><button onclick="addToCart('Clay Pot Set',1299)">Add to Cart</button><button onclick="buyNow('Clay Pot Set',1299)">Buy Now</button></div>
+<div class="card"><img src="wall hanging.jpeg" alt="Macrame Wall Hanging"><h3>Macrame Wall Hanging</h3><div class="rating">★★★★☆ (4.6)</div><p>Boho-style handmade décor piece.</p><div class="price">₹1099</div><button onclick="addToCart('Macrame Wall Hanging',1099)">Add to Cart</button><button onclick="buyNow('Macrame Wall Hanging',1099)">Buy Now</button></div>
+<div class="card"><img src="soap.jpg" alt="Handmade Soap Pack"><h3>Handmade Organic Soap</h3><div class="rating">★★★★★ (4.9)</div><p>Organic herbal soap pack collection.</p><div class="price">₹499</div><button onclick="addToCart('Handmade Soap Pack',499)">Add to Cart</button><button onclick="buyNow('Handmade Soap Pack',499)">Buy Now</button></div>
+<div class="card"><img src="customized frame.avif" alt="Customized Name Frame"><h3>Customized Name Frame</h3><div class="rating">★★★★★ (5.0)</div><p>Personalized handcrafted gift frame.</p><div class="price">₹1699</div><button onclick="addToCart('Customized Name Frame',1699)">Add to Cart</button><button onclick="buyNow('Customized Name Frame',1699)">Buy Now</button></div>
+</section>
+
+<section class="contact" id="contact">
+<h2>📞 Contact Us</h2>
+<div class="contact-grid">
+  <div class="contact-card">
+    <div class="icon">📍</div>
+    <div class="label">Main Address</div>
+    <div class="info">Moonlit Aura, No. 24, Handmade Street, Salem, Tamil Nadu – 636001, India</div>
+  </div>
+  <div class="contact-card">
+    <div class="icon">📞</div>
+    <div class="label">Phone</div>
+    <div class="info">+91 98765 43210</div>
+  </div>
+  <div class="contact-card">
+    <div class="icon">📧</div>
+    <div class="label">Email</div>
+    <div class="info">support@moonlitaura.com</div>
+  </div>
+  <div class="contact-card">
+    <div class="icon">🕒</div>
+    <div class="label">Working Hours</div>
+    <div class="info">Mon-Sat: 10 AM - 7 PM<br>Sunday: Closed</div>
+  </div>
+  <div class="contact-card">
+    <div class="icon">📱</div>
+    <div class="label">WhatsApp</div>
+    <div class="info">+91 98765 43210</div>
+  </div>
+  <div class="contact-card">
+    <div class="icon">📦</div>
+    <div class="label">Shipping</div>
+    <div class="info">Pan-India delivery in 5-7 days</div>
+  </div>
+</div>
+</section>
+
+</div>
+
+<div id="cart" class="cart-page">
+<header><h1>Shopping Cart 🛒</h1></header>
+<section class="cart-container">
+<div id="cart-items"></div>
+<br>
+<button onclick="location.href='address.html'" style="width: auto; margin: 20px auto;">Proceed to Checkout →</button>
+</section>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="successModal" class="success-modal-overlay">
+    <div class="success-modal">
+        <div class="success-check">✅</div>
+        <h2>Order Placed Successfully!</h2>
+        <p>Thank you for your purchase. Your order has been confirmed.</p>
+        <div class="order-id-box">
+            <span id="orderId">#ML202698056</span>
+        </div>
+        <p>A confirmation email will be sent to your registered email address.</p>
+        <button onclick="continueShopping()" style="width: 100%; margin-top: 20px;">Continue Shopping</button>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Moonlit Aura | All Rights Reserved | Handmade with Love 💖</p>
+</footer>
+
+<script>
+// Check if user is logged in - redirect to login if not
+window.addEventListener('load', function(){
+    if(!localStorage.getItem('isLoggedIn')){
+        window.location.href = 'login page.html';
+        return;
+    }
+});
+
+function logout(){
+    if(confirm('Are you sure you want to logout?')){
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('cart');
+        window.location.href = 'login page.html';
+    }
+}
+
+function showPage(page){
+    document.getElementById('home').style.display = (page==='home')?'block':'none';
+    document.getElementById('cart').style.display = (page==='cart')?'block':'none';
+    if(page==='cart') loadCart();
+}
+
+function scrollToSection(id){
+    showPage('home');
+    setTimeout(()=>{document.getElementById(id).scrollIntoView({behavior:'smooth'});},50);
+}
+
+function addToCart(name,price){
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let existing = cart.find(item => item.name === name);
+    if(existing){ existing.quantity += 1; } else { cart.push({name, price, quantity: 1}); }
+    localStorage.setItem('cart',JSON.stringify(cart));
+    alert('✅ ' + name + ' added to cart!');
+}
+
+function loadCart(){
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let container = document.getElementById('cart-items');
+    container.innerHTML="";
+    if(cart.length===0){
+        container.innerHTML="<p style='font-size: 18px; color: #999; padding: 40px; text-align: center;'>Your cart is empty 😢<br><br><button onclick=\"showPage('home')\" style='background: #6a11cb;'>Continue Shopping</button></p>";
+        let btn = document.querySelector('button[onclick="goToPayment()"]');
+        if(btn) btn.style.display = 'none';
+        return;
+    }
+    let btn = document.querySelector('button[onclick="goToPayment()"]');
+    if(btn) btn.style.display = 'block';
+    let total=0;
+    cart.forEach((item,index)=>{
+        let itemTotal = item.price * item.quantity;
+        total+=itemTotal;
+        let div=document.createElement('div');
+        div.className="cart-item";
+        div.innerHTML=`<span>${item.name}</span><span>₹${itemTotal}</span><div class="quantity-control"><button onclick="decreaseQty(${index})">−</button><span class="quantity-number">${item.quantity}</span><button onclick="increaseQty(${index})">+</button></div><button class="remove-btn" onclick="removeItem(${index})">Remove</button>`;
+        container.appendChild(div);
+    });
+    let totalDiv = document.createElement('div');
+    totalDiv.className = "cart-total";
+    totalDiv.textContent = 'Total: ₹' + total;
+    container.appendChild(totalDiv);
+}
+
+function removeItem(index){
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    let itemName = cart[index].name;
+    cart.splice(index,1);
+    localStorage.setItem('cart',JSON.stringify(cart));
+    loadCart();
+    alert('✅ ' + itemName + ' removed from cart!');
+}
+
+function increaseQty(index){
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    cart[index].quantity += 1;
+    localStorage.setItem('cart',JSON.stringify(cart));
+    loadCart();
+}
+
+function decreaseQty(index){
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    if(cart[index].quantity > 1){ cart[index].quantity -= 1; } else { cart.splice(index,1); }
+    localStorage.setItem('cart',JSON.stringify(cart));
+    loadCart();
+}
+
+function goToPayment(){
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if(cart.length===0){ alert("Your cart is empty 😢"); return; }
+    window.location.href = 'address.html';
+}
+
+function buyNow(name, price){
+    localStorage.removeItem('cart');
+    let cart = [{name, price, quantity: 1}];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = 'address.html';
+}
+
+function createConfetti(){
+    const colors = ['#ff6b6b', '#6a11cb', '#e91e63', '#ff9800', '#4CAF50', '#00bcd4'];
+    for(let i = 0; i < 50; i++){
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.top = '-10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        const animationDuration = 2 + Math.random() * 1 + 's';
+        const delay = Math.random() * 0.5 + 's';
+        
+        if(Math.random() > 0.5){
+            confetti.style.animation = `confetti-left ${animationDuration} ease-in ${delay} forwards`;
+        } else {
+            confetti.style.animation = `confetti-right ${animationDuration} ease-in ${delay} forwards`;
+        }
+        
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), (parseFloat(animationDuration) + parseFloat(delay)) * 1000);
+    }
+}
+
+function showSuccessModal(){
+    const orderId = '#ML' + new Date().getFullYear() + Math.random().toString().substr(2, 6);
+    document.getElementById('orderId').textContent = orderId;
+    document.getElementById('successModal').classList.add('show');
+    createConfetti();
+}
+
+function continueShopping(){
+    document.getElementById('successModal').classList.remove('show');
+    localStorage.removeItem('cart');
+    showPage('home');
+    window.scrollTo(0, 0);
+}
+
+// Check if coming from address.html with success status
+window.addEventListener('load', function(){
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('success') === 'true'){
+        showSuccessModal();
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+});
+
+// Logout function
+function logout(){
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('email');
+    localStorage.removeItem('fullname');
+    localStorage.removeItem('cart');
+    window.location.href = 'login page.html';
+}
+</script>
+
+</body>
+</html>

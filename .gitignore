@@ -1,0 +1,14 @@
+# Sensitive config - DO NOT push password to GitHub
+config.php
+
+# Database schema with sample data (optional - remove if you want to push)
+# database_schema.sql
+
+# XAMPP / IDE folders
+.vscode/
+.idea/
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store

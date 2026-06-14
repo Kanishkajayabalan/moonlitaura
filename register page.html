@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <title>Register Page</title>
+
+    <style>
+
+        body{
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('handmade background.png') center/cover no-repeat fixed;
+            background-color: #f5f5f5;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding: 20px;
+        }
+
+        .register-box{
+            background:rgba(255, 255, 255, 0.95);
+            width:350px;
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0 15px 40px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h2{
+            margin-bottom:30px;
+            color: #333;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin:10px 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+            font-size:15px;
+            box-sizing:border-box;
+        }
+
+        .password-box{
+            position:relative;
+        }
+
+        .password-box input{
+            padding-right:45px;
+        }
+
+        .password-box i{
+            position:absolute;
+            right:15px;
+            top:50%;
+            transform:translateY(-50%);
+            cursor:pointer;
+            color:black;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:5px;
+            background:#6a11cb;
+            color:white;
+            font-size:18px;
+            cursor:pointer;
+            margin-top:15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #4a0b8b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #message{
+            margin-top:15px;
+            font-size:15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        #message:not(:empty) {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #4a0b8b;
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="register-box">
+
+        <h2>Create Account</h2>
+
+        <form id="registerForm" method="POST" action="register.php">
+            <input type="text"
+            id="fullname"
+            name="fullname"
+            placeholder="Full Name"
+            required>
+
+            <input type="email"
+            id="email"
+            name="email"
+            placeholder="Email Address"
+            required>
+
+            <input type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required>
+
+            <div class="password-box">
+
+                <input type="password"
+                id="password"
+                name="password"
+                placeholder="Enter Password"
+                required>
+
+                <!-- Eye Icon -->
+                <i class="fa-solid fa-eye"
+                id="eye"></i>
+
+            </div>
+
+            <input type="password"
+            id="confirmPassword"
+            name="confirm_password"
+            placeholder="Confirm Password"
+            required>
+
+            <button type="submit" id="registerBtn">Register</button>
+        </form>
+
+        <p id="message"></p>
+
+        <div class="login-link">
+            Already have an account? <a onclick="goToLogin()">Login here</a>
+        </div>
+
+    </div>
+
+    <script>
+
+        $("#eye").click(function(){
+
+            let password = $("#password");
+
+            if(password.attr("type") === "password"){
+
+                password.attr("type","text");
+
+                $("#eye")
+                .removeClass("fa-eye")
+                .addClass("fa-eye-slash");
+            }
+
+            else{
+
+                password.attr("type","password");
+
+                $("#eye")
+                .removeClass("fa-eye-slash")
+                .addClass("fa-eye");
+            }
+        });
+
+        $("#registerForm").on("submit", function(e){
+            e.preventDefault();
+            
+            let fullname = $("#fullname").val().trim();
+            let email = $("#email").val().trim();
+            let username = $("#username").val().trim();
+            let password = $("#password").val().trim();
+            let confirmPassword = $("#confirmPassword").val().trim();
+            let $message = $("#message");
+
+            // Client-side validation
+            if(fullname === "" || email === "" || username === "" || password === "" || confirmPassword === ""){
+                $message.html("All fields are required!");
+                $message.css("color", "red");
+                $message.show();
+                return;
+            }
+
+            // Email validation
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailRegex.test(email)){
+                $message.html("Please enter a valid email address!");
+                $message.css("color", "red");
+                $message.show();
+                return;
+            }
+
+            if(password !== confirmPassword){
+                $message.html("Passwords do not match!");
+                $message.css("color", "red");
+                $message.show();
+                return;
+            }
+
+            if(password.length < 6){
+                $message.html("Password must be at least 6 characters!");
+                $message.css("color", "red");
+                $message.show();
+                return;
+            }
+
+            // Submit form to register.php
+            $.ajax({
+                type: "POST",
+                url: "register.php",
+                data: {
+                    fullname: fullname,
+                    email: email,
+                    username: username,
+                    password: password,
+                    confirm_password: confirmPassword
+                },
+                dataType: "json",
+                success: function(response) {
+                    if(response.success) {
+                        // Store in localStorage and redirect
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('username', response.username);
+                        localStorage.setItem('user_id', response.user_id);
+                        localStorage.setItem('email', response.email);
+                        localStorage.setItem('fullname', response.fullname);
+                        
+                        $message.html("Registration successful! Redirecting...");
+                        $message.css("color", "green");
+                        $message.show();
+                        
+                        setTimeout(function() {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    } else {
+                        $message.html(response.error || "Registration failed!");
+                        $message.css("color", "red");
+                        $message.show();
+                    }
+                },
+                error: function(xhr) {
+                    let errorMsg = "Registration error. Please try again.";
+                    try {
+                        let response = JSON.parse(xhr.responseText);
+                        errorMsg = response.error || errorMsg;
+                    } catch(e) {}
+                    
+                    $message.html(errorMsg);
+                    $message.css("color", "red");
+                    $message.show();
+                }
+            });
+        });
+
+        function goToLogin(){
+            window.location.href = 'login page.html';
+        }
+
+    </script>
+
+</body>
+</html>

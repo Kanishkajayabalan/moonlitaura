@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - Moonlit Aura</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: 'Poppins', sans-serif; 
+  background: url('handmade background.png') center/cover no-repeat fixed;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+
+body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1
+    z-index: 0;
+}
+body::before { top: -120px; left: -120px; }
+body::after { bottom: -120px; right: -120px; }
+
+header { 
+  text-align: center; 
+  padding: 30px; 
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+header h1 { color: #6a11cb; font-size: 36px; margin-bottom: 10px; }
+header p { color: #666; font-size: 16px; }
+
+.back-btn {
+  background: rgba(255,255,255,0.9);
+  color: #6a11cb;
+  padding: 12px 30px;
+  border: 2px solid #6a11cb;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.back-btn:hover {
+  background: #6a11cb;
+  color: white;
+}
+
+.content-wrapper { display: block; }
+
+.payment-methods {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeInUp 0.6s ease;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@keyframes fadeInUp { 
+  from { opacity: 0; transform: translateY(30px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}font-size: 28px; margin-bottom: 25px; border-bottom: 3px solid #6a11cb
+
+.payment-methods h2 { color: #f5576c; font-size: 28px; margin-bottom: 25px; border-bottom: 3px solid #f5576c; padding-bottom: 15px; }
+
+.payment-option {
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.payment-option:hover {
+  border-color: #f5576c;
+  background: rgba(245, 87, 108, 0.05);
+}
+
+.payment-option input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.payment-option .icon { font-size: 32px; }
+.payment-option .info { flex: 1; }
+.payment-option .title { font-weight: 700; color: #333; font-size: 16px; }
+.payment-option .desc { color: #999; font-size: 12px; margin-top: 3px; }
+
+.card-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: none;
+}
+
+.card-form.show { display: block; animation: slideDown 0.3s ease; }
+
+@keyframes slideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 500px; } }
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #f5576c;
+  box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+}
+
+.form-row { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; }
+
+.order-summary {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeInUp 0.6s ease 0.2s both;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.order-summary h3 { color: #f5576c; font-size: 20px; margin-bottom: 20px; }
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.order-item:last-child { border-bottom: none; }
+
+.order-item .price { color: #f5576c; font-weight: 700; }
+
+.summary-divider {
+  height: 2px;
+  background: #f0f0f0;
+  margin: 15px 0;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f5576c;
+}
+
+.security-badge {
+  background: #f0f0f0;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #666;
+}
+
+.pay-btn {
+  background: linear-gradient(135deg, #6a11cb, #8e44ad);
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.pay-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(106, 17, 203, 0.3);
+}
+
+footer {
+  text-align: center;
+  color: black;
+  padding: 30px;
+  margin-top: 40px;
+}
+
+@keyframes celebrate {
+  0% { transform: scale(0.5) rotateZ(-45deg); opacity: 0; }
+  50% { transform: scale(1.2) rotateZ(10deg); }
+  100% { transform: scale(1) rotateZ(0deg); opacity: 1; }
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0px) rotateZ(0deg); opacity: 1; }
+  100% { transform: translateY(300px) rotateZ(360deg); opacity: 0; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes slideInCenter {
+  from { 
+    opacity: 0; 
+    transform: scale(0.8) translateY(-50px);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1) translateY(0);
+  }
+}
+
+.success-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.success-container.show {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.success-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 50px 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideInCenter 0.5s ease;
+  position: relative;
+}
+
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  animation: celebrate 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+}
+
+.success-checkmark::after {
+  content: "✓";
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.success-title {
+  color: #6a11cb;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  animation: slideInCenter 0.5s ease 0.2s both;
+}
+
+.success-message {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 25px;
+  animation: slideInCenter 0.5s ease 0.3s both;
+  line-height: 1.6;
+}
+
+.order-id-box {
+  background: #f5f5f5;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin: 25px 0;
+  animation: slideInCenter 0.5s ease 0.4s both;
+}
+
+.order-id-label {
+  color: #999;
+  font-size: 12px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.order-id-value {
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.confirmation-message {
+  color: #999;
+  font-size: 13px;
+  margin-bottom: 30px;
+  animation: slideInCenter 0.5s ease 0.5s both;
+}
+
+.continue-shopping-btn {
+  background: linear-gradient(135deg, #6a11cb, #8e44ad);
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  animation: slideInCenter 0.5s ease 0.6s both;
+}
+
+.continue-shopping-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(106, 17, 203, 0.3);
+}
+
+.confetti-piece {
+  position: fixed;
+  pointer-events: none;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper { grid-template-columns: 1fr; }
+  .order-summary { position: relative; top: 0; }
+  .payment-methods, .order-summary { padding: 20px; }
+  header h1 { font-size: 28px; }
+  .success-modal {
+    padding: 40px 25px;
+  }
+  .success-title {
+    font-size: 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="successContainer" class="success-container">
+  <div class="success-modal">
+    <div class="success-checkmark"></div>
+    <h2 class="success-title">Order Placed<br>Successfully!</h2>
+    <p class="success-message">Thank you for your purchase. Your order has been confirmed.</p>
+    
+    <div class="order-id-box">
+      <div class="order-id-label">Order ID</div>
+      <div class="order-id-value" id="orderIdDisplay">#ML202698056</div>
+    </div>
+    
+    <p class="confirmation-message">A confirmation email will be sent to your registered email address.</p>
+    
+    <button class="continue-shopping-btn" onclick="continueShopping()">Continue Shopping</button>
+  </div>
+</div>
+
+<div class="container">
+  <header>
+    <h1>🌙 MOONLIT AURA</h1>
+    <p>Complete Your Purchase</p>
+    <div class="breadcrumb">Cart → Address → <span class="active">Payment</span></div>
+  </header>
+
+  <div class="content-wrapper">
+    <div class="payment-methods">
+      <h2>💳 Choose Payment Method</h2>
+      
+      <label class="payment-option">
+        <input type="radio" name="payment" value="card" onchange="showCardForm()" checked>
+        <div class="icon">💳</div>
+        <div class="info">
+          <div class="title">Debit / Credit Card</div>
+          <div class="desc">Visa, MasterCard, RuPay</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="upi" onchange="hideCardForm()">
+        <div class="icon">📱</div>
+        <div class="info">
+          <div class="title">UPI Payment</div>
+          <div class="desc">Google Pay, PhonePe, Paytm</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="netbanking" onchange="hideCardForm()">
+        <div class="icon">🏦</div>
+        <div class="info">
+          <div class="title">Net Banking</div>
+          <div class="desc">All major banks supported</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="wallet" onchange="hideCardForm()">
+        <div class="icon">💰</div>
+        <div class="info">
+          <div class="title">Digital Wallets</div>
+          <div class="desc">Amazon Pay, Paytm Wallet</div>
+        </div>
+      </label>
+
+      <label class="payment-option">
+        <input type="radio" name="payment" value="cod" onchange="hideCardForm()">
+        <div class="icon">📦</div>
+        <div class="info">
+          <div class="title">Cash on Delivery</div>
+          <div class="desc">Pay when you receive</div>
+        </div>
+      </label>
+
+      <div id="cardForm" class="card-form show">
+        <h3 style="color: #333; margin-bottom: 15px; font-size: 16px;">Card Details</h3>
+        <div class="form-group">
+          <label>Card Number *</label>
+          <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+        </div>
+        <div class="form-group">
+          <label>Cardholder Name *</label>
+          <input type="text" placeholder="Full name as on card">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry Date *</label>
+            <input type="text" placeholder="MM/YY">
+          </div>
+          <div class="form-group">
+            <label>CVV *</label>
+            <input type="text" placeholder="123" maxlength="3">
+          </div>
+        </div>
+      </div>
+
+      <button class="pay-btn" onclick="processPayment()">✓ Pay Now</button>
+    </div>
+
+    <div class="order-summary">
+      <h3>📋 Order Summary</h3>
+      <div id="orderItemsContainer"></div>
+
+      <div class="summary-divider"></div>
+
+      <div class="order-item">
+        <span>Subtotal</span>
+        <span class="price" id="subtotalPrice">₹0</span>
+      </div>
+      <div class="order-item">
+        <span>Shipping</span>
+        <span class="price">Free</span>
+      </div>
+      <div class="order-item">
+        <span>Tax (18%)</span>
+        <span class="price" id="taxPrice">₹0</span>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="order-total">
+        <span>Total Amount</span>
+        <span id="totalPrice">₹0</span>
+      </div>
+
+      <div class="security-badge">
+        🔒 Your payment is secured with 256-bit SSL encryption
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Moonlit Aura | Handmade with Love 💖</p>
+</footer>
+
+<script>
+// Load cart items on page load
+window.addEventListener('load', function() {
+  loadOrderSummary();
+  // Redirect to cart if not logged in
+  if (!localStorage.getItem('isLoggedIn')) {
+    alert('Please log in first');
+    window.location.href = 'login page.html';
+  }
+});
+
+function loadOrderSummary() {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const container = document.getElementById('orderItemsContainer');
+  container.innerHTML = '';
+  
+  if (cart.length === 0) {
+    container.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Your cart is empty</p>';
+    document.querySelector('.pay-btn').disabled = true;
+    return;
+  }
+  
+  let subtotal = 0;
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    subtotal += itemTotal;
+    
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'order-item';
+    itemDiv.innerHTML = `
+      <span>${item.name} (x${item.quantity})</span>
+      <span class="price">₹${itemTotal}</span>
+    `;
+    container.appendChild(itemDiv);
+  });
+  
+  const tax = Math.round(subtotal * 0.18);
+  const total = subtotal + tax;
+  
+  document.getElementById('subtotalPrice').textContent = '₹' + subtotal;
+  document.getElementById('taxPrice').textContent = '₹' + tax;
+  document.getElementById('totalPrice').textContent = '₹' + total;
+}
+
+function showCardForm() {
+  document.getElementById('cardForm').classList.add('show');
+}
+
+
+function hideCardForm() {
+  document.getElementById('cardForm').classList.remove('show');
+}
+
+function generateOrderId() {
+  const timestamp = Date.now().toString().slice(-9);
+  const random = Math.random().toString(36).substring(2, 5).toUpperCase();
+  return '#ML' + timestamp + random;
+}
+
+function createConfetti() {
+  const emojis = ['🎉', '✨', '🎊', '⭐', '💫', '🌟', '🎁', '🎈', '💝', '🌸', '🎀', '✨', '🌺', '💖'];
+  const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B88B', '#52C2C7'];
+  
+  const confetti = document.createElement('div');
+  confetti.className = 'confetti-piece';
+  
+  const type = Math.random();
+  
+  if (type < 0.4) {
+    // Emoji confetti
+    confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    confetti.style.fontSize = (15 + Math.random() * 15) + 'px';
+  } else if (type < 0.7) {
+    // Colored circles
+    confetti.style.width = (10 + Math.random() * 20) + 'px';
+    confetti.style.height = confetti.style.width;
+    confetti.style.borderRadius = '50%';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.boxShadow = `0 0 ${5 + Math.random() * 5}px ${colors[Math.floor(Math.random() * colors.length)]}`;
+  } else {
+    // Colored rectangles
+    confetti.style.width = (8 + Math.random() * 15) + 'px';
+    confetti.style.height = (8 + Math.random() * 15) + 'px';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.borderRadius = (Math.random() * 3) + 'px';
+    confetti.style.boxShadow = `0 0 ${3 + Math.random() * 5}px ${colors[Math.floor(Math.random() * colors.length)]}`;
+  }
+  
+  confetti.style.left = Math.random() * 100 + '%';
+  confetti.style.top = '-30px';
+  confetti.style.animation = `confetti ${2 + Math.random() * 1.5}s ease-out forwards`;
+  confetti.style.setProperty('--random-delay', Math.random() * 0.5 + 's');
+  confetti.style.animationDelay = 'var(--random-delay)';
+  confetti.style.pointerEvents = 'none';
+  document.body.appendChild(confetti);
+  
+  setTimeout(() => confetti.remove(), 3500);
+}
+
+function launchCelebration() {
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => createConfetti(), i * 60);
+  }
+}
+
+function processPayment() {
+  const method = document.querySelector('input[name="payment"]:checked').value;
+  
+  // Get cart items from localStorage
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart.length === 0) {
+    alert('❌ Your cart is empty!');
+    return;
+  }
+  
+  // Get user_id from localStorage
+  const user_id = localStorage.getItem('user_id');
+  if (!user_id) {
+    alert('❌ Please login first!');
+    window.location.href = 'login page.html';
+    return;
+  }
+  
+  // Prepare items data for API
+  const items = cart.map(item => ({
+    id: generateProductId(item.name),
+    name: item.name,
+    price: item.price * item.quantity,
+    quantity: item.quantity
+  }));
+  
+  // Send order to database
+  const formData = new FormData();
+  formData.append('items', JSON.stringify(items));
+  formData.append('payment_method', method);
+  formData.append('user_id', user_id);
+  
+  // Show loading state
+  const payBtn = document.querySelector('.pay-btn');
+  const originalText = payBtn.textContent;
+  payBtn.textContent = '⏳ Processing...';
+  payBtn.disabled = true;
+  
+  fetch('save_order.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      // Order saved successfully
+      const orderId = '#ML' + data.order_id;
+      document.getElementById('orderIdDisplay').textContent = orderId;
+      
+      // Show success modal
+      const successContainer = document.getElementById('successContainer');
+      successContainer.classList.add('show');
+      
+      // Launch celebration effects
+      launchCelebration();
+      
+      // Prevent scrolling
+      document.body.style.overflow = 'hidden';
+      
+      // Clear cart after successful order
+      localStorage.removeItem('cart');
+    } else {
+      alert('❌ Error placing order: ' + (data.error || 'Unknown error'));
+      payBtn.textContent = originalText;
+      payBtn.disabled = false;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    
+    // FALLBACK: Save order locally when server is unavailable
+    console.log('Server unavailable, saving locally...');
+    
+    // Generate order ID
+    const orderId = 'ML' + Date.now();
+    
+    // Store order in localStorage
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const newOrder = {
+      order_id: orderId,
+      user_id: user_id,
+      items: items,
+      payment_method: method,
+      total: items.reduce((sum, item) => sum + item.price, 0),
+      timestamp: new Date().toISOString()
+    };
+    orders.push(newOrder);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    
+    // Show success
+    document.getElementById('orderIdDisplay').textContent = '#' + orderId;
+    const successContainer = document.getElementById('successContainer');
+    successContainer.classList.add('show');
+    launchCelebration();
+    document.body.style.overflow = 'hidden';
+    localStorage.removeItem('cart');
+  });
+}
+
+// Helper function to generate product ID (can be improved with real product IDs)
+function generateProductId(productName) {
+  const products = {
+    'Handmade Silver Necklace': 1,
+    'Organic Lavender Candle': 2,
+    'Crochet Handbag': 3,
+    'Premium Resin Art Frame': 4,
+    'Wooden Jewelry Box': 5,
+    'Handmade Diary': 6,
+    'Clay Pot Set': 7,
+    'Macrame Wall Hanging': 8,
+    'Handmade Organic Soap Pack': 9,
+    'Customized Name Frame': 10
+  };
+  return products[productName] || 1;
+}
+
+function continueShopping() {
+  document.body.style.overflow = 'auto';
+  window.location.href = 'index.html';
+}
+
+</script>
+
+</body>
+</html>
