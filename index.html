@@ -236,11 +236,22 @@ footer { background: transparent; color: black; text-align: center; padding: 30p
 </footer>
 
 <script>
-// Check if user is logged in - redirect to login if not
+// Check if running on localhost - if not, no login required
+function isLocalhost(){
+    return location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+}
+
 window.addEventListener('load', function(){
-    if(!localStorage.getItem('isLoggedIn')){
+    // localhost la mattum login check
+    if(isLocalhost() && !localStorage.getItem('isLoggedIn')){
         window.location.href = 'login page.html';
         return;
+    }
+    // success modal check
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('success') === 'true'){
+        showSuccessModal();
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 });
 
@@ -250,7 +261,11 @@ function logout(){
         localStorage.removeItem('username');
         localStorage.removeItem('email');
         localStorage.removeItem('cart');
-        window.location.href = 'login page.html';
+        if(isLocalhost()){
+            window.location.href = 'login page.html';
+        } else {
+            window.location.reload();
+        }
     }
 }
 
