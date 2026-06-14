@@ -728,18 +728,16 @@ function placeOrder() {
     let tax = Math.round(subtotal * 0.05);
     let total = subtotal + shipping + tax;
 
-    // Save order data (in real app, send to backend)
+    // Save order to localStorage
     let orderData = {
         orderId: orderId,
-        fullName: fullName,
-        email: email,
-        phone: phone,
-        address: address,
-        city: city,
-        state: state,
-        zip: zip,
-        country: country,
-        notes: notes,
+        fullName: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        zip: document.getElementById('zip').value,
         paymentMethod: payment.value,
         items: cart,
         subtotal: subtotal,
@@ -748,12 +746,12 @@ function placeOrder() {
         total: total,
         orderDate: new Date().toISOString()
     };
-
-    // Save to localStorage (persist order)
     localStorage.setItem('lastOrder', JSON.stringify(orderData));
+    localStorage.removeItem('cart');
 
-    // Redirect to index.html with success parameter
-    window.location.href = 'index.html?success=true';
+    // Show success modal directly — no login needed
+    document.getElementById('orderId').textContent = orderId;
+    document.getElementById('successModal').classList.add('show');
 }
 
 // Continue shopping
