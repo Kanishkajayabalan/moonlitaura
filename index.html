@@ -14,7 +14,7 @@ function logout() {
     localStorage.removeItem('user_id');
     localStorage.removeItem('email');
     localStorage.removeItem('fullname');
-    window.location.href = 'login.php';
+    window.location.href = 'login page.html';
 }
 </script>
 <style>
@@ -241,8 +241,8 @@ function isLocalhost(){
 }
 
 window.addEventListener('load', function(){
-    // localhost la mattum login check
-    if(isLocalhost() && !localStorage.getItem('isLoggedIn')){
+    // Static Cloudflare-ready login check
+    if(!localStorage.getItem('isLoggedIn')){
         window.location.href = 'login page.html';
         return;
     }

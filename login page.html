@@ -132,7 +132,7 @@
 
         <h2>Login</h2>
 
-        <form id="loginForm" method="POST" action="login.php">
+        <form id="loginForm" method="POST" action="#">
             <input type="text"
             id="username"
             name="username"
@@ -191,12 +191,11 @@
 
         $("#loginForm").on("submit", function(e){
             e.preventDefault();
-            
+
             let username = $("#username").val().trim();
             let password = $("#password").val().trim();
             let $message = $("#message");
 
-            // Client-side validation
             if(username === "" || password === ""){
                 $message.html("All fields are required!");
                 $message.css("color", "red");
@@ -211,47 +210,41 @@
                 return;
             }
 
-            // Submit form to login.php
-            $.ajax({
-                type: "POST",
-                url: "login.php",
-                data: {
-                    username: username,
-                    password: password
-                },
-                dataType: "json",
-                success: function(response) {
-                    if(response.success) {
-                        // Store in localStorage and redirect
-                        localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('username', response.username);
-                        localStorage.setItem('user_id', response.user_id);
-                        
-                        $message.html("Login successful! Redirecting...");
-                        $message.css("color", "green");
-                        $message.show();
-                        
-                        setTimeout(function() {
-                            window.location.href = 'index.html';
-                        }, 1000);
-                    } else {
-                        $message.html(response.error || "Login failed!");
-                        $message.css("color", "red");
-                        $message.show();
-                    }
-                },
-                error: function(xhr) {
-                    let errorMsg = "Login error. Please try again.";
-                    try {
-                        let response = JSON.parse(xhr.responseText);
-                        errorMsg = response.error || errorMsg;
-                    } catch(e) {}
-                    
-                    $message.html(errorMsg);
-                    $message.css("color", "red");
-                    $message.show();
-                }
+            let users = JSON.parse(localStorage.getItem('moonlit_users') || '[]');
+            if(users.length === 0){
+                users = [
+                    { username: 'user', password: 'user123', email: 'user@test.com', fullname: 'Demo User' },
+                    { username: 'admin', password: 'admin123', email: 'admin@test.com', fullname: 'Admin User' },
+                    { username: 'demo', password: 'demo123', email: 'demo@test.com', fullname: 'Demo Guest' },
+                    { username: 'test', password: 'test123', email: 'test@test.com', fullname: 'Test User' }
+                ];
+                localStorage.setItem('moonlit_users', JSON.stringify(users));
+            }
+
+            let matchedUser = users.find(function(user){
+                return user.username.toLowerCase() === username.toLowerCase() && user.password === password;
             });
+
+            if(!matchedUser){
+                $message.html("Invalid username or password.");
+                $message.css("color", "red");
+                $message.show();
+                return;
+            }
+
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', matchedUser.username);
+            localStorage.setItem('user_id', matchedUser.username);
+            localStorage.setItem('email', matchedUser.email || '');
+            localStorage.setItem('fullname', matchedUser.fullname || matchedUser.username);
+
+            $message.html("Login successful! Redirecting...");
+            $message.css("color", "green");
+            $message.show();
+
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 1000);
         });
 
         function goToRegister(){

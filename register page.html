@@ -142,7 +142,7 @@
 
         <h2>Create Account</h2>
 
-        <form id="registerForm" method="POST" action="register.php">
+        <form id="registerForm" method="POST" action="#">
             <input type="text"
             id="fullname"
             name="fullname"
@@ -258,52 +258,50 @@
                 return;
             }
 
-            // Submit form to register.php
-            $.ajax({
-                type: "POST",
-                url: "register.php",
-                data: {
-                    fullname: fullname,
-                    email: email,
-                    username: username,
-                    password: password,
-                    confirm_password: confirmPassword
-                },
-                dataType: "json",
-                success: function(response) {
-                    if(response.success) {
-                        // Store in localStorage and redirect
-                        localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('username', response.username);
-                        localStorage.setItem('user_id', response.user_id);
-                        localStorage.setItem('email', response.email);
-                        localStorage.setItem('fullname', response.fullname);
-                        
-                        $message.html("Registration successful! Redirecting...");
-                        $message.css("color", "green");
-                        $message.show();
-                        
-                        setTimeout(function() {
-                            window.location.href = 'index.html';
-                        }, 1000);
-                    } else {
-                        $message.html(response.error || "Registration failed!");
-                        $message.css("color", "red");
-                        $message.show();
-                    }
-                },
-                error: function(xhr) {
-                    let errorMsg = "Registration error. Please try again.";
-                    try {
-                        let response = JSON.parse(xhr.responseText);
-                        errorMsg = response.error || errorMsg;
-                    } catch(e) {}
-                    
-                    $message.html(errorMsg);
-                    $message.css("color", "red");
-                    $message.show();
-                }
+            let users = JSON.parse(localStorage.getItem('moonlit_users') || '[]');
+            let usernameExists = users.some(function(user){
+                return user.username.toLowerCase() === username.toLowerCase();
             });
+
+            if(usernameExists){
+                $message.html("This username is already taken!");
+                $message.css("color", "red");
+                $message.show();
+                return;
+            }
+
+            let emailExists = users.some(function(user){
+                return user.email && user.email.toLowerCase() === email.toLowerCase();
+            });
+
+            if(emailExists){
+                $message.html("This email is already registered!");
+                $message.css("color", "red");
+                $message.show();
+                return;
+            }
+
+            users.push({
+                fullname: fullname,
+                email: email,
+                username: username,
+                password: password
+            });
+
+            localStorage.setItem('moonlit_users', JSON.stringify(users));
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', username);
+            localStorage.setItem('user_id', username);
+            localStorage.setItem('email', email);
+            localStorage.setItem('fullname', fullname);
+
+            $message.html("Registration successful! Redirecting...");
+            $message.css("color", "green");
+            $message.show();
+
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 1000);
         });
 
         function goToLogin(){
